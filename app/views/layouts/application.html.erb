@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Geuvadis Exome Variants Server</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div class="Main_Header">
+		<h1> </h1>
+		<ul class="nav">
+			<li><%= link_to :Home , :home, class: "nav_links" %></li>
+			<li> | </li>
+			<li><%= link_to :Documentation , :documentation, class: "nav_links" %></li>
+			<li> | </li>
+			<li><%= link_to :About, :about, class: "nav_links" %></li>
+			<li> | </li>
+			<li><%= link_to :Contact, :contact, class: "nav_links" %></li>
+		</ul>
+	</div>
+	<% if flash[:color]== "valid" %>
+		<div class="valid_notice">
+			<p><%= flash[:notice]%></p>
+		</div>
+	<% elsif flash[:color]== "invalid"%>
+		<div class="invalid_notice">
+			<p><%=flash[:notice]%></p>
+		</div>
+	<%else%>
+	<%end%>
+	
+<%= yield %>
+
+
+
+</body>
+</html>

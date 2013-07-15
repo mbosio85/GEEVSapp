@@ -1,0 +1,77 @@
+<h2 align="center">Search Results</h2>
+<div class="search_res">
+	<table>
+		<tr>
+			<th>Chr</th>
+			<th>Position</th>
+			<th>Reference</th>
+			<th>Alteration</th>
+			<th>Allele Freq</th>
+			<th>Gene</th>
+			<th>Transcript</th>
+			<th>AAC</th>
+			<th>Variant fucntion</th>
+			<th>Exonic Function</th>
+			<th>PhyloP(Pm)</th>
+			<th>PhyloP(Pr)</th>
+			<th>PhyloP(vt)</th>
+			<th>PhastCons(Pm)</th>
+			<th>PhastCons(Pr)</th>
+			<th>PhastCons(vt)</th>
+			<th>GERP++(s1)</th>
+			<th>GERP++(s1)</th>
+			<th>SIFT</th>
+			<th>Pph2</th>
+			<th>MutAss</th>
+			<th>Condel</th>
+			<th>dbSNP</th>
+			<th>dbSNP_gmaf</th>
+			<th>AF(Eur:EVS)</th>
+			<th>AF(Afr:EVS)</th>
+			<th>AF(Tot:EVS)</th>
+			<th>AF(Eur:1000G)</th>
+			<th>AF(Afr:1000G)</th>
+			<th>AF(Amr:1000G)</th>
+			<th>AF(Asia:1000G)</th>
+			<th>AF(Tot:1000G)</th>
+			<th>SugDup</th>
+		</tr>
+		<% @res.each do |r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r30,r31,r32,r33,r34,r35,r36,r37,r38| -%>
+		<tr>
+			<td><%= r2 %></td> 
+			<td><%= r3 %></td>
+			<td><%= r4 %></td>
+			<td><%= r5 %></td>
+			<td><%= r31 %></td>
+			<td><%= r33 %></td>
+			<td><%= r34 %></td>
+			<td><%= r35 %></td>
+			<td><%= r36 %></td>
+			<td><%= r37 %></td>
+			<td><%= r8 %></td>
+			<td><%= r9 %></td>
+			<td><%= r10 %></td>
+			<td><%= r11 %></td>
+			<td><%= r12 %></td>
+			<td><%= r13 %></td>
+			<td><%= r14 %></td>
+			<td><%= r15 %></td>
+			<td><%= r16 %></td>
+			<td><%= r17 %></td>
+			<td><%= r18 %></td>
+			<td><%= r19 %></td>
+			<td><%= r20 %></td>
+			<td><%= r21 %></td>
+			<td><%= r22 %></td>
+			<td><%= r23 %></td>
+			<td><%= r24 %></td>
+			<td><%= r25 %></td>
+			<td><%= r26 %></td>
+			<td><%= r27 %></td>
+			<td><%= r28 %></td>
+			<td><%= r29 %></td>
+			<td><%= r30 %></td>						
+		</tr>
+		<% end -%>
+	</table>
+</div>>

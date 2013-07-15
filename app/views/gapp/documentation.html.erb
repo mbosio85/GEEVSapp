@@ -1,0 +1,141 @@
+<div class = "Documentation">
+<h3>Search variants by Chromosome and Position</h3>
+	<p>
+		You can search variants by providing appropriate chromosome, start and end position. These three fields are mandatory for searching varints by this search panel.
+		You can also modify your searching critereas such as selecting which sequencing platform you want to query. Selecting a similar platform for your sequencing projects 
+		can be more meaningful. You can also select the pre-annotated gene definitions and exonic function. Finally, there is another optional filter critera Allele Frequency.
+		You can be dynamic while using this field in various ways. It supports greater than (>=),greater than or queal (>) and so on. Supported formats are:</br>
+      	1. Greater than ( > )</br>
+      	2. Greater than or Equal( >= )</br>
+      	3. Less than ( < )</br>
+      	4. Less than or Equal ( <=)</br>
+      	5. Equal to ( = )</br>
+      	6. Not Equal to ( != ) 
+	</p>
+</div>
+
+
+<div class = "Documentation">
+<h3>Search variants by Gene</h3>
+	<p>
+		You can also search variants by HGNC approved Gene Names or Ensembl gene identifiers. The other fields are similar to previous search panel. If you are searching variants by
+		Ensembl gene identifiers, then you must select Ensembl gene definition in the Gene Definition select box. You can find more about HGNC gene names 
+		<%= link_to :here , "http://www.genenames.org/", class: "nav_links" %>. For Ensembl gene identifers you can check <%= link_to :here , "http://www.ensembl.org/index.html", class: "nav_links" %>.
+	</p>	
+</div>
+
+
+<div class = "Documentation">
+<h3>Search Result Fields</h3>
+		<table>
+			<tr>
+			<th>Field</th>
+			<th>Field Description</th>
+			</tr>
+			<tr>
+			<td>Chr</td>
+			<td>Chromosome</td>
+			</tr>
+			<tr>
+			<td>Position</td>
+			<td>Absolute co-ordinate(1-based system) on the chromosome</td>
+			</tr>
+			<tr>
+			<td>Reference</td>
+			<td>Allele in the reference sequence</td>
+			</tr>
+			<tr>
+			<td>Alteration</td>
+			<td>Observed allele in the sample</td>
+			</tr>
+			<tr>
+			<td>PhyloP(Pm,Pr,vt)</td>
+			<td>PhyloP conservation scores in the order of placental mammal, primates and vertebrates. You can find more about this <%= link_to :here , "http://genome.ucsc.edu/cgi-bin/hgTables", class: "nav_links" %>, at the conservation tracks.</td>
+			</tr>
+			<tr>
+			<td>PhastCons(Pm,Pr,vt)</td>
+			<td>PhastCons conservation scores in the order of placental mammal, primates and vertebrates. You can find more about this <%= link_to :here , "http://genome.ucsc.edu/cgi-bin/hgTables", class: "nav_links" %>, at the conservation tracks.</td>
+			</tr>
+			<tr>
+			<td>GERP++(s1,s2)</td>
+			<td>GERP++ conservation scores. You can find more about this <%= link_to :here , "http://mendel.stanford.edu/SidowLab/downloads/gerp/", class: "nav_links" %></td>
+			</tr>
+			<tr>
+			<td>SIFT</td>
+			<td>Sift score for the variation</td>
+			</tr>				
+			<tr>
+			<td>Pph2</td>
+			<td>Polyphen2 score for the variation</td>
+			</tr>
+			<tr>
+			<td>MutAss</td>
+			<td>Mutationassessor score for the variation</td>
+			</tr>
+			<tr>
+			<td>Condel</td>
+			<td>Condel score for the variation</td>
+			</tr>
+			<tr>
+			<td>dbSNP</td>
+			<td>dbSNP rs identifier for the variation (v.137)</td>
+			</tr>
+			<tr>
+			<td>dbSNP_gmaf</td>
+			<td>Global minor allele frequency for the dbSNP rs identifier (v.137)</td>
+			</tr>
+			<tr>
+			<td>AF(Eur:EVS,Afr:EVS,Tot:EVS)</td>
+			<td>Allele frequency in the Washington Exome variant server in ther order of European, African and Total (v.ESP5400)</td>
+			</tr>
+			<tr>
+			<td>AF(Eur:1000G,Afr:1000G,Amr:1000G,Asia:1000G,Tot:1000G)</td>
+			<td>Allele frequency in the 1000 genomes project in ther order of European, African, American, Asian and Total</td>
+			</tr>
+			<tr>
+			<td>SugDup</td>
+			<td>Sugment Duplication score</td>
+			</tr>
+			<tr>
+			<td>Allele Freq</td>
+			<td>Allele frequency in the Geuvadis exome variant server</td>
+			</tr>
+			<tr>
+			<td>Gene</td>
+			<td>The gene where the variant is hit</td>
+			</tr>
+			<tr>
+			<td>Transcript</td>
+			<td>The transcript of the gene that was hit by the variant</td>
+			</tr>
+			<tr>
+			<td>AAC</td>
+			<td>Amino acid change in the hit transcript. Format => AAC1<position>AAC2, which indicates that AAC1 was changed to AAC2 at that location by the variation</td>
+			</tr>
+			<tr>
+			<td>Variant Function</td>
+			<td>Function of the variation</td>
+			</tr>
+			<tr>
+			<td>Exonic Function</td>
+			<td>Exonic function of the region</td>
+			</tr>
+		</table>
+</div>
+
+
+<div class = "Documentation">
+<h3>Annotation</h3>
+	<p>
+		All the variants were annotated at the Genomic and Epigenomic Variations in Disease group in Center for Genomic Regulation - CRG, Barcelona. Annotation was done by an 
+		inhouse developed tool with Annovar integrated inside.
+	</p>
+</div>
+
+<div class = "Documentation">
+<h3></h3>
+	
+</div>
+
+
+
