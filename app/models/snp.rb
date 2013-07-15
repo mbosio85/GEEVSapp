@@ -11,7 +11,7 @@ class Snp
       genedef = "UCSC"
     end
     ## clean exonic function
-    if function == "Exonic/Splicing"
+    if function == "Exonic & Splicing"
       function = "exonic;splicing"
     end
     
@@ -23,7 +23,7 @@ class Snp
     
     ## form query
     qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE S.chromosome = '"+chromosome+"' 
-    AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND S.AF "+af+ " limit 50000";
+    AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND S.AF "+af+ " limit 5000";
     ## create model object and query    
     cc = Snp.new.self
     if start_pos == end_pos && start_pos!="" && end_pos !=""
@@ -69,7 +69,7 @@ class Snp
     end
     ## form query
     qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
-    AND S."+ platform + " is not NULL AND R.exonic_function = '"+ function + "' AND S.AF "+af+ " limit 50000";   
+    AND S."+ platform + " is not NULL AND R.exonic_function = '"+ function + "' AND S.AF "+af+ " limit 5000";   
     ## create model object and query
     cc = Snp.new.self
     res = cc.query(qry)

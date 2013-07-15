@@ -10,7 +10,7 @@
         <br><br>
            Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %> &nbsp;
            Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
-           Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Exonic/Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option>".html_safe %>  &nbsp;
+           Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Exonic & Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
         <br><br>
            Allele Frequency: <%= text_field_tag :af %> [e.g. < 0.05, <= 0.05, > 0.05, >= 0.05, = 0.05, != 0.05] &nbsp;
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag("Search") %>
@@ -28,7 +28,7 @@
         <br><br>
            Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %>  &nbsp;
            Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
-           Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Exonic/Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option>".html_safe %>  &nbsp;
+           Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Exonic & Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
         <br><br>   
            Allele Frequency: <%= text_field_tag :af %> [e.g. < 0.05, <= 0.05, > 0.05, >= 0.05, = 0.05, != 0.05] &nbsp;
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag("Search") %>
