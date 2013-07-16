@@ -1,41 +1,74 @@
 <div class= "Search">
-<h3 float = "left">Search Variants by Chromosome and Position</h2>
+<h2 float = "left">Search Variants by Chromosome and Position</h2>
+</div>
 </div class= "Search"> 
-        <%= form_tag(:controller => 'gapp',:action => 'search_chr_pos') do %>
 		<div class= "Search">
-       
+       <table>
+       	<tr>
+       	   <td>
+       	   <%= form_tag(:controller => 'gapp',:action => 'search_chr_pos') do %>
            Chromosome: <%= select_tag "chromosome", options_for_select(@chr), :prompt => "Select" %> &nbsp;
            Start: <%= text_field_tag :start_pos %> [e.g. 112431] &nbsp;
            End: <%= text_field_tag :end_pos %> [e.g. 112445] &nbsp;
-        <br><br>
+           <br><br>
            Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %> &nbsp;
            Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
-           Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Exonic & Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
-        <br><br>
+           Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
+           <br><br>
            Allele Frequency: <%= text_field_tag :af %> [e.g. < 0.05, <= 0.05, > 0.05, >= 0.05, = 0.05, != 0.05] &nbsp;
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag("Search") %>
-           </div>
+       	   </td>
+       	   <td></td>
+       	   <td width="35%">
+       			<p text-align="justify">
+				You can search variants by providing appropriate chromosome, start and end positions.
+				You can also modify your searching critereas such as selecting which sequencing platform you want to query,gene definitions and exonic function. 
+				Finally, there is another optional filter critera Allele Frequency.
+				You can be dynamic while using this field in various ways. Detailed description can be found 
+				<%= link_to :here , :documentation , class: "nav_links" %>.  
+				</p>
+       	   </td>
+       	</tr>	
+       </table>
+       </div>
 		<% end %>
 </div>
 
 
 <div class= "Search">
-<h3 float = "left">Search Variants by Gene</h2>
+<h2 float = "left">Search Variants by Gene</h2>
+</div>
 </div class= "Search">
-        <%= form_tag(:controller => 'gapp',:action => 'search_gene') do %>
+
 		<div class= "Search">
-           Gene: <%= text_field_tag :gene %> [HGNC approved gene names or Ensembl gene identifiers  e.g. ATM, ENSG00000187634] &nbsp;
-        <br><br>
-           Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %>  &nbsp;
-           Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
-           Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Exonic & Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
-        <br><br>   
-           Allele Frequency: <%= text_field_tag :af %> [e.g. < 0.05, <= 0.05, > 0.05, >= 0.05, = 0.05, != 0.05] &nbsp;
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag("Search") %>
-		</div>
-		<% end %>
+	    <table>
+		<tr>
+			<td>
+ 			    <%= form_tag(:controller => 'gapp',:action => 'search_gene') do %>
+
+		        Gene: <%= text_field_tag :gene %> [HGNC approved gene names or Ensembl gene identifiers  e.g. ATM, ENSG00000187634] &nbsp;
+       			<br><br>
+           		Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %>  &nbsp;
+           		Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
+           		Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
+        		<br><br>   
+           		Allele Frequency: <%= text_field_tag :af %> [e.g. < 0.05, <= 0.05, > 0.05, >= 0.05, = 0.05, != 0.05] &nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag("Search") %>
+			</td>
+			<td></td><td></td>
+       		<td width="35%">
+       			<p text-align="justify">
+				You can search variants by HGNC approved Gene Names or Ensembl gene identifiers. The other fields are similar to previous search panel. 
+				If you are searching variants by Ensembl gene identifiers, then you must select Ensembl gene definition in the Gene Definition select box. 
+				Detailed description can be found <%= link_to :here , :documentation , class: "nav_links" %>.  
+				</p>
+       		</td>
+		</tr>
+		</table>	
+		</div>	
+		<% end %>			
 </div>
 
 <div class = "footer">
-	<p>A product of European Geuvadis Consortium | Beta Version</p>
+	<p>An application of European Geuvadis Consortium | Beta Version</p>
 </div>

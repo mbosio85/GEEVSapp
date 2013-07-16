@@ -27,11 +27,11 @@ body{
         text-decoration: none;
 } 
 .Search {
-		float:left;
+		float:center;
         text-align:left;
         margin:auto;
         margin-top:25px;
-       	margin-left:50px; 
+       	margin-left:15%; 
         width:70%;
         border-bottom: 2px solid;
 }

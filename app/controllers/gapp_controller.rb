@@ -12,16 +12,22 @@ class GappController < ApplicationController
       redirect_to :action => "home"
       flash[:notice] = "You must select a Chromosome !"
       flash[:color]= "invalid"
-    elsif (!(params[:start_pos] =~ /\d/) or !(params[:end_pos] =~ /\d/) or params[:end_pos].length > 11 or params[:start_pos].length > 11)
+    elsif (!(params[:start_pos] =~ /\d/) or !(params[:end_pos] =~ /\d/) or params[:end_pos].length > 11 or params[:start_pos].length > 11 or (params[:end_pos] < params[:start_pos]))
       redirect_to :action => "home"
       flash[:notice] = "Wrong Position Values !"
       flash[:color]= "invalid"
-    elsif(!(params[:af] == "") and !(params[:af] =~ /^\>\=(\s)+[01]\.\d/) and !(params[:af] =~ /^\>(\s)+[01]\.\d/) and !(params[:af] =~ /^\<\=(\s)+[01]\.\d/) and !(params[:af] =~ /^\<(\s)+[01]\.\d/) and !(params[:af] =~ /^\=(\s)+[01]\.\d/) and !(params[:af] =~ /^\!\=(\s)+[01]\.\d/))
+    elsif(!(params[:af] == "") and !(params[:af] =~ /^\>\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\>(\s)*[01]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\<(\s)*[01]\.\d/) and !(params[:af] =~ /^\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01]\.\d/))
       redirect_to :action => "home"
       flash[:notice] = "Wrong Allele Frequency format !"
       flash[:color]= "invalid"
     else
-      @res = Snp.searchChrPos(params[:chromosome],params[:start_pos],params[:end_pos],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:af])
+      #@res = Snp.searchChrPos(params[:chromosome],params[:start_pos],params[:end_pos],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:af])
+      (@res,rlen) = Snp.searchChrPos(params[:chromosome],params[:start_pos],params[:end_pos],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:af])
+      if rlen == 0
+        redirect_to :action => "home"
+        flash[:notice] = "No variants in the database for your query parameters !"
+        flash[:color]= "invalid"
+      end
     end
   end
   
@@ -32,13 +38,17 @@ class GappController < ApplicationController
       redirect_to :action => "home"
       flash[:notice] = "Wrong Gene name format !"
       flash[:color]= "invalid"
-    elsif(!(params[:af] == "") and !(params[:af] =~ /^\>\=(\s)+[01]\.\d/) and !(params[:af] =~ /^\>(\s)+[01]\.\d/) and !(params[:af] =~ /^\<\=(\s)+[01]\.\d/) and !(params[:af] =~ /^\<(\s)+[01]\.\d/) and !(params[:af] =~ /^\=(\s)+[01]\.\d/) and !(params[:af] =~ /^\!\=(\s)+[01]\.\d/) )
+    elsif(!(params[:af] == "") and !(params[:af] =~ /^\>\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\>(\s)*[01]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\<(\s)*[01]\.\d/) and !(params[:af] =~ /^\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01]\.\d/))
       redirect_to :action => "home"
       flash[:notice] = "Wrong Allele Frequency format !"
       flash[:color]= "invalid"
     else
-      #@finalres = Array.new
-      @res = Snp.searchGene(params[:gene],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:af])
+      (@res,rlen) = Snp.searchGene(params[:gene],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:af])
+      if rlen == 0
+        redirect_to :action => "home"
+        flash[:notice] = "Either not a valid HGNC symbol or no variants in the database for your query gene !"
+        flash[:color]= "invalid"
+      end
     end
   end  
 

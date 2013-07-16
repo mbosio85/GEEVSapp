@@ -10,10 +10,13 @@ class Snp
     if genedef == "UCSC/Known"
       genedef = "UCSC"
     end
-    ## clean exonic function
-    if function == "Exonic & Splicing"
-      function = "exonic;splicing"
+    ## clean allele frequency
+    if (af =~ /^\<\>/)
+      operators, *values = af.split(/>/)
+      val1,val2 = values.split(/,/)
+      af = "between "+val1+ " and "+val2
     end
+    
     
     #qry1 = "SELECT * FROM Table_SNP WHERE chromosome = '"+chromosome+"' AND position = "+start_pos+ " AND "+platform+" is not NULL"   
     #qry2 = "SELECT * FROM Table_SNP WHERE chromosome = '"+chromosome+"' AND position >= "+start_pos+ " AND "+platform+" is not NULL"
@@ -55,17 +58,13 @@ class Snp
     ## close connection
     cc.close
     
-    return res
+    return res,res.num_rows
   end
     
   def self.searchGene(gene, platform, genedef, function, af)
     ## clean gene def
     if (genedef == "UCSC/Known")
       genedef = "UCSC"
-    end
-    ## clean exonic function
-    if (function == "Exonic/Splicing")
-      function = "exonic;splicing"
     end
     ## form query
     qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
@@ -76,8 +75,7 @@ class Snp
 
     ## close connection
     cc.close
-    
-    return res
+    return res,res.num_rows
   end  
  
 end
