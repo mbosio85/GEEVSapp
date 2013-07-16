@@ -2,7 +2,7 @@
 <h2 float = "left">Search Variants by Chromosome and Position</h2>
 </div>
 </div class= "Search"> 
-		<div class= "Search">
+	<div class= "Search">
        <table>
        	<tr>
        	   <td>
@@ -15,8 +15,9 @@
            Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
            Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
            <br><br>
-           Allele Frequency: <%= text_field_tag :af %> [e.g. < 0.05, <= 0.05, > 0.05, >= 0.05, = 0.05, != 0.05] &nbsp;
+           Allele Frequency: <%= text_field_tag :af %> [e.g. <0.05,<=0.05,>0.05,>=0.05,=0.05,!= 0.05,<>0.1,0.9] &nbsp;
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag("Search") %>
+       	   <% end %>
        	   </td>
        	   <td></td>
        		<td width="35%" text-align="justify">
@@ -30,8 +31,7 @@
        	   </td>
        	</tr>	
        </table>
-       </div>
-		<% end %>
+    </div>
 </div>
 
 
@@ -39,8 +39,7 @@
 <h2 float = "left">Search Variants by Gene</h2>
 </div>
 </div class= "Search">
-
-		<div class= "Search">
+	<div class= "Search">
 	    <table>
 		<tr>
 			<td>
@@ -52,8 +51,9 @@
            		Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
            		Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">Exonic</option><option>Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
         		<br><br>   
-           		Allele Frequency: <%= text_field_tag :af %> [e.g. < 0.05, <= 0.05, > 0.05, >= 0.05, = 0.05, != 0.05] &nbsp;
+           		Allele Frequency: <%= text_field_tag :af %> [e.g. <0.05,<=0.05,>0.05,>=0.05,=0.05,!= 0.05,<>0.1,0.9] &nbsp;
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag("Search") %>
+				<% end %>
 			</td>
 			<td></td><td></td>
        		<td width="35%" text-align="justify">
@@ -65,8 +65,7 @@
        		</td>
 		</tr>
 		</table>	
-		</div>	
-		<% end %>			
+	</div>				
 </div>
 
 <div class = "footer">

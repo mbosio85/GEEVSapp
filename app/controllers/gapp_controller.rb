@@ -16,7 +16,7 @@ class GappController < ApplicationController
       redirect_to :action => "home"
       flash[:notice] = "Wrong Position Values !"
       flash[:color]= "invalid"
-    elsif(!(params[:af] == "") and !(params[:af] =~ /^\>\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\>(\s)*[01]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\<(\s)*[01]\.\d/) and !(params[:af] =~ /^\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01]\.\d/))
+    elsif(!(params[:af] == "") and !(params[:af] =~ /^\<\>(\s)*[01\s]\.\d(\s)*\,(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01\s]\.\d/))
       redirect_to :action => "home"
       flash[:notice] = "Wrong Allele Frequency format !"
       flash[:color]= "invalid"
@@ -25,7 +25,7 @@ class GappController < ApplicationController
       (@res,rlen) = Snp.searchChrPos(params[:chromosome],params[:start_pos],params[:end_pos],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:af])
       if rlen == 0
         redirect_to :action => "home"
-        flash[:notice] = "No variants in the database for your query parameters !"
+        flash[:notice] = "No variants found in the database for your query parameters !"
         flash[:color]= "invalid"
       end
     end
@@ -38,7 +38,7 @@ class GappController < ApplicationController
       redirect_to :action => "home"
       flash[:notice] = "Wrong Gene name format !"
       flash[:color]= "invalid"
-    elsif(!(params[:af] == "") and !(params[:af] =~ /^\>\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\>(\s)*[01]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\<(\s)*[01]\.\d/) and !(params[:af] =~ /^\=(\s)*[01]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01]\.\d/))
+elsif(!(params[:af] == "") and !(params[:af] =~ /^\<\>(\s)*[01\s]\.\d(\s)*\,(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01\s]\.\d/))
       redirect_to :action => "home"
       flash[:notice] = "Wrong Allele Frequency format !"
       flash[:color]= "invalid"

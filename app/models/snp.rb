@@ -12,12 +12,11 @@ class Snp
     end
     ## clean allele frequency
     if (af =~ /^\<\>/)
-      operators, *values = af.split(/>/)
+      operators, values = af.split(/>/)
       val1,val2 = values.split(/,/)
       af = "between "+val1+ " and "+val2
     end
-    
-    
+        
     #qry1 = "SELECT * FROM Table_SNP WHERE chromosome = '"+chromosome+"' AND position = "+start_pos+ " AND "+platform+" is not NULL"   
     #qry2 = "SELECT * FROM Table_SNP WHERE chromosome = '"+chromosome+"' AND position >= "+start_pos+ " AND "+platform+" is not NULL"
     #qry3 = "SELECT * FROM Table_SNP WHERE chromosome = '"+chromosome+"' AND position <= "+end_pos+ " AND "+platform+" is not NULL"
@@ -66,6 +65,14 @@ class Snp
     if (genedef == "UCSC/Known")
       genedef = "UCSC"
     end
+    ## clean allele frequency
+    if (af =~ /^\<\>/)
+      operators, values = af.split(/>/)
+      val1,val2 = values.split(/,/)
+      af = "between "+val1+ " and "+val2
+    end
+
+    
     ## form query
     qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
     AND S."+ platform + " is not NULL AND R.exonic_function = '"+ function + "' AND S.AF "+af+ " limit 5000";   
