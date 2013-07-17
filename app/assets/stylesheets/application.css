@@ -1,3 +1,9 @@
+/*
+ *= require_self
+ *= require dataTables/jquery.dataTables
+ *= require_tree . 
+ */
+
 body{
         background-color: #fff;
 }
@@ -28,12 +34,14 @@ body{
 } 
 .Search {
 		float:center;
-        text-align:left;
         margin:auto;
         margin-top:25px;
        	margin-left:15%; 
         width:70%;
         border-bottom: 2px solid;
+}
+.Search p{
+		text-align: justify;
 }
 .Documentation h3{
 		float:left;
@@ -78,6 +86,7 @@ body{
 .search_res table th td{
         padding: 6px 16px 6px 6px;
 }
+
 .footer{
 	text-align: center;
 	position: fixed;
