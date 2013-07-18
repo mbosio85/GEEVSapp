@@ -8,16 +8,13 @@ body{
         background-color: #fff;
 }
 .Main_Header{
-        height:115px;
+		text-align: right;
+        height:45px;
         width:100%;
-}
-.Main_Header h1{
-        float:left;
-        margin-top:1px;
-        height:100px;
-        width:600px;
-        text-align:center;
-        background-image: url('newGeuLogo.jpg');
+        border-bottom: 2px solid;
+       	background-color: #fff;
+	    background-image: url('geuBanner.png');
+       	background-repeat:no-repeat;
 }
 .nav{
         list-style-type: none;
@@ -43,33 +40,28 @@ body{
 .Search p{
 		text-align: justify;
 }
+.Search h2{
+	    text-align: center;
+}
+
+.Documentation {
+		float:center;
+        margin:auto;
+        margin-top:25px;
+       	margin-left:15%; 
+        width:70%;
+        border-bottom: 2px solid;
+}
 .Documentation h3{
-		float:left;
-        text-align:left;
-        width:80%;
+        border-bottom: 2px solid;
 }
 .Documentation p{
-		margin: -1px 50px;
-		float:left;
-        text-align:justify;
-        width:80%;
-        background:#CCCCCC;
-        padding: 5px 5px 5px 5px;
-        box-shadow: 5px 5px 5px #888888;
-        border-radius: 4px 4px 4px 4px;
+		text-align: justify;
 }
-
-.Documentation table {
-		margin: -1px 50px;
-		float:left;
-        text-align:justify;
-        width:80%;
-        background:#CCCCCC;
-        padding: 5px 5px 5px 5px;
-        box-shadow: 5px 5px 5px #888888;
-        border-radius: 4px 4px 4px 4px;
+.Documentation table{
+        text-align: left;
+        margin: auto;
 }
-
 .search_res table tr{
         text-align: center;
         margin: auto;
@@ -88,11 +80,14 @@ body{
 }
 
 .footer{
-	text-align: center;
-	position: fixed;
-   	bottom: 0px;	
+	position: absolute;
+	bottom: 0px;
    	right: 0%;
    	left: 0%;
+    border-top: 2px solid;
+}
+.footer li{
+        display: inline;
 }
 .notice, .valid_notice, .invalid_notice{
 	height: auto; /*35px; */

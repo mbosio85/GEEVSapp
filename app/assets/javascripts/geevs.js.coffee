@@ -3,5 +3,13 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
+#jQuery ->
+#  $('#variants').dataTable()
+  
 jQuery ->
-  $('#variants').dataTable()
+  $('#variants').dataTable( {
+    "sScrollX": "90%",
+    "bScrollCollapse": true,
+    "bFilter": true
+  } );
+#} );
