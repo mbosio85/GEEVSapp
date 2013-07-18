@@ -7,9 +7,9 @@
        	<tr>
        	   <td>
        	   <%= form_tag(:controller => 'gapp',:action => 'search_chr_pos') do %>
-           Chromosome: <%= select_tag "chromosome", options_for_select(@chr), :prompt => "Select" %> &nbsp;
-           Start: <%= text_field_tag :start_pos %> [e.g. 112431] &nbsp;
-           End: <%= text_field_tag :end_pos %> [e.g. 112445] &nbsp;
+           <b>Chromosome</b>: <%= select_tag "chromosome", options_for_select(@chr), :prompt => "Select" %> &nbsp;
+           <b>Start</b>: <%= text_field_tag :start_pos %> [e.g. 112431] &nbsp;
+           <b>End</b>: <%= text_field_tag :end_pos %> [e.g. 112445] &nbsp;
            <br><br>
            Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %> &nbsp;
            Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
@@ -45,7 +45,7 @@
 			<td>
  			    <%= form_tag(:controller => 'gapp',:action => 'search_gene') do %>
 
-		        Gene: <%= text_field_tag :gene %> [HGNC gene names or Ensembl gene identifiers e.g. ATM, ENSG00000187634] &nbsp;
+		        <b>Gene</b>: <%= text_field_tag :gene %> [HGNC gene names or Ensembl gene identifiers e.g. ATM, ENSG00000187634] &nbsp;
        			<br><br>
            		Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %>  &nbsp;
            		Gene definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;

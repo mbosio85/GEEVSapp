@@ -50,7 +50,7 @@ elsif(!(params[:af] == "") and !(params[:af] =~ /^\<\>(\s)*[01\s]\.\d(\s)*\,(\s)
       (@res,rlen) = Snp.searchGene(params[:gene],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:af])
       if rlen == 0
         redirect_to :action => "home"
-        flash[:notice] = "Either not a valid HGNC symbol or no variants in the database for your query gene !"
+        flash[:notice] = "Either not a valid HGNC symbol/Ensembl gene indentifier or no variants in the database for your query gene !"
         flash[:color]= "invalid"
       end
     end
