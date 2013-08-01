@@ -1,85 +1,31 @@
-<h2 align="center">Search Results</h2>
-<div class="search_res">
-	<table id="variants">
-		<thead>
-		<tr>
-			<th>Chr</th>
-			<th>Position</th>
-			<th>Reference</th>
-			<th>Alteration</th>
-			<th>Allele Freq</th>
-			<th>Allele Count</th>
-			<th>Allele Number</th>
-			<th>Gene</th>
-			<th>Transcript</th>
-			<th>AAC</th>
-			<th>Variant fucntion</th>
-			<th>Exonic Function</th>
-			<th>PhyloP(Pm)</th>
-			<th>PhyloP(Pr)</th>
-			<th>PhyloP(vt)</th>
-			<th>PhastCons(Pm)</th>
-			<th>PhastCons(Pr)</th>
-			<th>PhastCons(vt)</th>
-			<th>GERP++(s1)</th>
-			<th>GERP++(s1)</th>
-			<th>SIFT</th>
-			<th>Pph2</th>
-			<th>MutAss</th>
-			<th>Condel</th>
-			<th>dbSNP</th>
-			<th>dbSNP_gmaf</th>
-			<th>AF(Eur:EVS)</th>
-			<th>AF(Afr:EVS)</th>
-			<th>AF(Tot:EVS)</th>
-			<th>AF(Eur:1000G)</th>
-			<th>AF(Afr:1000G)</th>
-			<th>AF(Amr:1000G)</th>
-			<th>AF(Asia:1000G)</th>
-			<th>AF(Tot:1000G)</th>
-			<th>SugDup</th>
-		</tr>
-		</thead>
-		<tbody>
-		<% @res.each do |r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r30,r31,r32,r33,r34,r35,r36,r37,r38,r39| -%>
-		<tr>
-			<td><%= r2 %></td> 
-			<td><%= r3 %></td>
-			<td><%= r4 %></td>
-			<td><%= r5 %></td>
-			<td><%= r31 %></td>
-			<td><%= r32 %></td>
-			<td><%= r33 %></td>
-			<td><%= r35 %></td>
-			<td><%= r36 %></td>
-			<td><%= r37 %></td>
-			<td><%= r38 %></td>
-			<td><%= r39 %></td>
-			<td><%= r8 %></td>
-			<td><%= r9 %></td>
-			<td><%= r10 %></td>
-			<td><%= r11 %></td>
-			<td><%= r12 %></td>
-			<td><%= r13 %></td>
-			<td><%= r14 %></td>
-			<td><%= r15 %></td>
-			<td><%= r16 %></td>
-			<td><%= r17 %></td>
-			<td><%= r18 %></td>
-			<td><%= r19 %></td>
-			<td><%= r20 %></td>
-			<td><%= r21 %></td>
-			<td><%= r22 %></td>
-			<td><%= r23 %></td>
-			<td><%= r24 %></td>
-			<td><%= r25 %></td>
-			<td><%= r26 %></td>
-			<td><%= r27 %></td>
-			<td><%= r28 %></td>
-			<td><%= r29 %></td>
-			<td><%= r30 %></td>						
-		</tr>
-		<% end -%>
-		</tbody>
-	</table>
-</div>
+<table align="center">	
+<tr>
+<td>
+	<div class= "Search">
+	<h3></h3>
+       <table align="center">	
+       	<tr>
+       	   <td>
+       	   <%= form_tag(:controller => 'gapp',:action => 'search_chr_pos_show') do %>
+           <b>Chromosome</b>: <%= select_tag "chromosome", options_for_select(@chr), :prompt => "Select" %> &nbsp;
+           <b>Start</b>: <%= text_field_tag :start_pos, nil, :class => 'sfieldOptional' %> &nbsp;
+           <b>End</b>: <%= text_field_tag :end_pos, nil, :class => 'sfieldOptional' %> &nbsp;&nbsp;<%= submit_tag("Search") %>
+           <br><br>
+           <b>Advanced Options</b>
+           <br><br>
+           Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %> &nbsp;
+           Gene Definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
+           Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">All</option><option>Exonic</option><option>Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
+           <br><br>
+           Variant Function: <%= select_tag "varfunction","<option selected=\"selected\">All</option><option>Nonsynonymous</option><option>Synonymous</option><option>Stopgain</option><option>Stoploss</option>".html_safe %>&nbsp;
+           Allele Frequency: <%= text_field_tag :af ,nil, :class => 'sfieldOptionalaf',:placeholder => "e.g.>0.05,<>0.01,0.9" %>
+           <br><br>
+
+       	   <% end %>
+       	   </td>
+       	</tr>	
+       </table>
+    </div>
+</td>
+</tr>
+</table>

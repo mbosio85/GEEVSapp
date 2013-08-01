@@ -5,9 +5,11 @@ gem 'ruby-mysql',  '~> 2.9.10'
 gem 'activerecord-ruby_mysql-adapter'
 gem 'will_paginate', '~> 3.0'
 gem 'capistrano'
-gem "google_visualr", "~> 2.1.7"
 gem 'jquery-datatables-rails'
-#gem 'therubyracer'
+gem 'bcrypt-ruby', :require => 'bcrypt'
+
+
+#gem 'therubyracer' ## only uncomment this in production
 
 
 # Gems used only for assets and not required

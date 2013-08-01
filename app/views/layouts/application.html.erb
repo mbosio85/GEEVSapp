@@ -7,10 +7,55 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<div class="Main_Header">
-		<h1> </h1>
+	<div class="Banner">
+		<table align="center">
+		<tr><td>
+			<%= link_to (image_tag('geuBannerNew2.png')), :home %>
+		</td></tr>
+		</table>
+	</div>
+	
+	<div class="container">
+		<div class="lognav_banner">
+			<table align="center">
+				<tr>
+				<% unless session[:user]%>
+		  			<%= form_tag(:controller => 'users', :action => 'authenticateUser') do %>				
+					<td>
+						<%= text_field_tag :login_username , nil, :class => "logfieldPanel" ,:placeholder => "username" %>
+					</td>
+					<td>
+						<%= password_field_tag :login_password, nil,:class => "logfieldPanel", :placeholder => "password" %>
+					</td>
+					<td>
+						<%= submit_tag("Login") %>
+					</td>			
+					<% end -%>
+				<% end -%>
+				<% if session[:user] %>
+					<td>
+						<p>LOGOUT<p>
+					</td>
+					<td>
+						<%= link_to (image_tag('logout.png')), :controller => "users", :action => "logout"%>
+					</td>
+					
+				<%end -%>
+				</tr>	
+			</table>
+	</div>
+
+
+	<% if session[:user]%>
+	<div class="nav_banner">
 		<ul class="nav">
-			<li><%= link_to :Home , :home, class: "nav_links" %></li>
+			<li><%= link_to :"GEUVADIS European Exome Variant Server" , :home, class: "nav_links" %></li>
+			<li> | </li>
+			<li><%= link_to :"Search by Coordinate" , :search_chr_pos, class: "nav_links" %></li>
+			<li> | </li>
+			<li><%= link_to :"Search by Gene" , :search_gene, class: "nav_links" %></li>
+			<li> | </li>
+			<li><%= link_to :"Submit Data", :submitdata, class: "nav_links" %></li>
 			<li> | </li>
 			<li><%= link_to :Documentation , :documentation, class: "nav_links" %></li>
 			<li> | </li>
@@ -19,22 +64,40 @@
 			<li><%= link_to :Contact, :contact, class: "nav_links" %></li>
 		</ul>
 	</div>
-	<% if flash[:color]== "valid" %>
-		<div class="valid_notice">
-			<p><%= flash[:notice]%></p>
-		</div>
-	<% elsif flash[:color]== "invalid"%>
-		<div class="invalid_notice">
-			<p><%=flash[:notice]%></p>
-		</div>
-	<%else%>
-	<%end%>
+	<% end -%>
+
+
 	
-<%= yield %>
-
-
-
-
+		<% if flash[:color]== "valid" %>
+			<div class="valid_notice">
+				<p><%= flash[:notice]%></p>
+			</div>
+		<% elsif flash[:color]== "invalid"%>
+			<div class="invalid_notice">
+				<p><%=flash[:notice]%></p>
+			</div>
+		<%else%>
+		<%end%>
+	
+		<%= yield %>
+	
+		<div class = "footer">
+		<table align="center">
+			<tr>
+				<td><b>Beta Version</b>
+				<td> &nbsp; | &nbsp; </td>
+				<td>An application of European GEUVADIS Consortium
+				</td>
+				<td> &nbsp; | &nbsp; </td>
+				<td>GEUVADIS Copyright © GEUVADIS 2010. All Rights Reserved.
+				</td>
+				</td>
+			</tr>	
+		</table>
+		</div>
+	
+	</div>
+	
 
 </body>
 </html>

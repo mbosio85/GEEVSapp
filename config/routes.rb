@@ -1,11 +1,18 @@
 GEEVSapp::Application.routes.draw do
   
-  match ':controller(/:action(/:id))(.:format)'
-  root :to => 'gapp#home'
-  match "home", :to => 'gapp#home'
-  match "documentation", :to => 'gapp#documentation'
-  match "about", :to => 'gapp#about'
-  match "contact", :to => 'gapp#contact'
+    match ':controller(/:action(/:id))(.:format)'
+    root :to => 'gapp#home'
+    match "newUser", :to => 'users#newUser'
+    match "home", :to => 'gapp#home'
+    match "documentation", :to => 'gapp#documentation'
+    match "about", :to => 'gapp#about'
+    match "contact", :to => 'gapp#contact'
+    match "search_chr_pos", :to => 'gapp#search_chr_pos'
+    match "search_gene", :to => 'gapp#search_gene'
+    match "submitdata", :to => 'gapp#submitdata'
+
+  #match "login", :to => 'users#login'
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

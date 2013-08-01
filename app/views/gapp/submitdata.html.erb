@@ -1,0 +1,203 @@
+<div class = "submission">
+<h2>
+	Data Submission Protocol
+</h2>
+<table align="center">
+	
+	<tr>	
+		<td>
+			You should follow the instructions listed below for submitting data to GEUVADIS European Exome Varinat Server.
+			<ul>
+				<li>In the data submit form, you must specify the sequencing platform as for aggregating your data to the existing data in the database, we need to know this.</li>
+				<li>As you probably already have a computational pipeline for the generation of the data and if your sequencing platform is Illumina and you are using GATK tool
+					to call the variants, then you are already one step closer to submit the data.</li>
+				<li>If you have used GATK in a single sample mode, then its better to group your bam files and call the varinats in multi-sample mode. You can find a short
+					tutorial below about how to quickly perform this GATK multi-sample call, perform recalibration and apply recalibration steps.</li>
+				<li>If you are using an older version of GATK in which you have limitation on the number of samples to group together for the multi-sample calling, then you 
+					should upgrade to a newer version of GATK which can be downloaded from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>.</li>
+				<li>If you are using some other variant caller than GATK and your caller produces variant file other than VCF format, then you must convert your file to
+					VCF format. Have a look at the sample VCF format that we accept below in this page.</li>
+				<li>After the submission of your data, the GEEVS team will check your data quality and based on that, your data will be aggregated with the current existing
+					data on the database.</li>				 
+			</ul>
+		</td>
+		<td></td><td></td><td></td>	
+		<td>
+			<div class = "submitdata">
+  				<%= form_tag(:controller => '#', :action => '#',:multipart => true) do %>
+  				<table align="center">
+  				<tr>
+  					<td>
+  			  			<p><b>Data Submission Form</b> (all fields are mandatory)</p>		
+  					</td>
+  				</tr>
+  				<tr>
+  					<td>
+  						<%= select_tag "platform", options_for_select(@platform), :prompt => "select your sequencing platform" , :class => "submitdataPanel"%> &nbsp;
+  					</td>	           
+  				</tr>	
+  				<tr>
+ 					<td>
+ 		    			<%= text_area_tag :datauser,nil,:placeholder => "name(s) of the person responsible for the data. For multiple names separate them by comma(,)", :class => "submitdataPanel" %> 			 
+					</td>
+				</tr>
+				<tr>
+					<td>
+		    			<%= text_field_tag :email,nil,:placeholder => "email(s). For multiple names separate them by comma(,)", :class => "submitdataPanel" %>
+		    		</td>
+				</tr>
+				<tr>    
+		    		<td>
+  						<%= text_field_tag :institute, nil, :placeholder => "name of the organization" , :class => "submitdataPanel"%>
+  					</td>
+		  		</tr>
+  				<tr>	
+  					<td>
+		    			<%= text_field_tag :instituteUrl, nil, :placeholder => "weblink of the organization" , :class => "submitdataPanel"%>
+		    		</td>
+				</tr>
+				<tr>
+					<td>
+						Logo of the organization: <%= file_field_tag 'logo'%>
+					<td>	
+				<tr>
+				<tr>
+					<td>
+						Variant VCF File: <%= file_field_tag 'varinatFile'%>
+					<td>	
+				<tr>	
+					<td>	   
+      					<p><%= submit_tag "Submit data to Server" , disabled: true%></p>
+  						<p class = "alertPanel"> <b>Data submission is currently off. Sorry for the inconvenience. !!</b></p>
+  					</td>
+  				</tr>
+  				</table>	
+  				<% end %>
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div class = "submissionTutorial">
+<h2>
+	Data Preparation Tutorial
+</h2>
+
+
+	This tutorial has been prepared for a quick overview of the <b>GATK multi-sample calling</b> procedure from the <%= link_to "GATK-best practices","http://www.broadinstitute.org/gatk/guide/",target: "_blank", class: "nav_links_body" %>.  
+	If you dont have GATK, get started by downloading from 
+	<%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>. You also need to download the GATK bundle 
+	resource for performing variant reclibration and you can also download the updated bundle resource from <%= link_to :"here", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body" %>.
+
+
+<ul>
+	<li>At first, you should collect all sample bam files complete paths in a single file your_collection_bams.list.</li>
+	
+	<p>		
+	<b>your_collection_bams.list</b><br>
+	path_to_your_sample1/sample1.bam<br>
+	path_to_your_sample2/sample2.bam<br>
+	...<br>
+	...
+	</p>
+
+	<li>Next, perform the GATK multisample call.</li>
+	<p>
+		BAMS = your_collection_bams.list<br>
+		CPU = number of CPU cores according to your computational system capabilities<br>
+		PROBE = your exome target enrichment probe file<br><br>
+		java -jar GenomeAnalysisTK.jar -R hg19.fasta -T UnifiedGenotyper -I $BAMS --num_threads $CPU -o multisampleInitialCall.vcf -A DepthPerAlleleBySample --intervals $PROBE<br>
+	</p>
+
+	<li>Perform the variant recalibration now. As we are currently accepting single nucleotide variants, hence this step only shows you how to do variant recalibration for SNVs.</li>
+	
+	<p>
+		GATKRS = path_to_your_GATK_bundle_resource<br><br> 
+		java -Xmx4g -jar GenomeAnalysisTK.jar -T VariantRecalibrator -R hg19.fasta -input multisampleInitialCall.vcf -recalFile multisampleInitialCall.vcf.recal 
+		-tranchesFile multisampleInitialCall.vcf.tranches   --maxGaussians 6 -resource:hapmap,known=false,training=true,truth=true,prior=15.0 $GATKRS/hapmap_3.3.hg19.vcf 
+		-resource:omni,known=false,training=true,truth=false,prior=12.0 $GATKRS/1000G_omni2.5.hg19.vcf -resource:dbsnp,known=true,training=false,truth=false,prior=6.0 
+		$GATKRS/dbsnp_137.hg19.vcf -an QD -an HaplotypeScore -an MQRankSum -an ReadPosRankSum -an FS -an MQ -an InbreedingCoeff -mode SNP
+	</p>
+
+	<li>Finally, you have to apply the recalibration.</li>
+	
+	<p>
+		java -Xmx4g -jar GenomeAnalysisTK.jar -T ApplyRecalibration -R hg19.fasta -input multisampleInitialCall.vcf -tranchesFile multisampleInitialCall.vcf.tranches 
+		-recalFile multisampleInitialCall.vcf.recal -o multisampleInitialCall.recalibrated.filtered.vcf --ts_filter_level 99.0 -mode SNP
+	</p>	
+
+</ul>
+</div>
+
+
+<div class = "submissionTutorial">
+<h2>
+	Sample VCF file format
+</h2>
+
+	Your VCF file format should be of version '4.1'. Apart from traditional VCF file format structure, you should include some more details in the HEADER and your file 
+	must contail some specific INFOs. You can learn more about the details of the VCF format <%= link_to :"here", "http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41", target: "_blank", class: "nav_links_body" %>.
+	Specifications have been shown below. 
+
+<ul>
+	<li> VCF file HEADER should be lke this :</li>
+
+	<p>		
+##fileformat=VCFv4.1<br>
+##fileDate=20130308<br>
+##SampleSize=100<br>
+##Population=Caucasian<br>
+##Phenotype=43 mental retardation, 10 cystic fibrosis, 47 Fibromyalgia<br>
+##Enrichment=SureSelect Human All Exon V3 (50Mbp)<br>
+##Sequencer=HiSeq2000<br>
+##SeqVersion=TrueSeq PE Cluster Generation Kit v3, SBS Sequencing Kit v3<br>
+###ReferenceSeq=hg19<br>
+##Center=Center for Genomic Regulation - CRG, Barcelona<br>
+##Contact=Stephan Ossowski, Stephan.Ossowski@crg.eu<br>
+##Run=100bp paired-end<br>
+##ReferenceSeq=hg19<br>
+<%=  "##Analysis=<Alignment=bwa v0.5.9,VariantCalling=GenomeAnalysisTK v 2.3-9 + samtools mpileup + shore, CallingType = Multi-sample>" %><br>
+	</p>
+
+	<li>VCF mandatory INFO tags :</li>
+
+<p>
+<%= "##INFO=<ID=AC,Number=A,Type=Integer,Description=\"Allele count in genotypes, in the order of ALT allele listed\">" %><br>
+<%= "##INFO=<ID=AF,Number=A,Type=Float,Description=\"Allele Frequency, for each ALT allele, in the same order as listed\">" %><br>
+<%= "##INFO=<ID=AN,Number=1,Type=Integer,Description=\"Total number of alleles in called genotypes\">" %><br>
+<%= "##INFO=<ID=GTS,Number=3,Type=String,Description=\"Observed Genotypes in the order of RR,RA,AA where R=REF allele and A=ALT allele. For INDELs, A1, A2, or An refers to the N-th alternate allele while R refers to the reference allele\">" %> <br>
+<%= "##INFO=<ID=GTC,Number=3,Type=Integer,Description=\"Genotype Counts in the order of GTS list\">" %><br>
+<%= "##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Approximate average read depth floored to the nearest Integer(reads with MQ=255 or with bad mates are filtered)\">" %><br>
+</p>	
+
+</ul>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
