@@ -8,17 +8,16 @@
 		<td>
 			You should follow the instructions listed below for submitting data to GEUVADIS European Exome Varinat Server.
 			<ul>
-				<li>In the data submit form, you must specify the sequencing platform as for aggregating your data to the existing data in the database, we need to know this.</li>
-				<li>As you probably already have a computational pipeline for the generation of the data and if your sequencing platform is Illumina and you are using GATK tool
-					to call the variants, then you are already one step closer to submit the data.</li>
-				<li>If you have used GATK in a single sample mode, then its better to group your bam files and call the varinats in multi-sample mode. You can find a short
-					tutorial below about how to quickly perform this GATK multi-sample call, perform recalibration and apply recalibration steps.</li>
-				<li>If you are using an older version of GATK in which you have limitation on the number of samples to group together for the multi-sample calling, then you 
-					should upgrade to a newer version of GATK which can be downloaded from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>.</li>
-				<li>If you are using some other variant caller than GATK and your caller produces variant file other than VCF format, then you must convert your file to
-					VCF format. Have a look at the sample VCF format that we accept below in this page.</li>
-				<li>After the submission of your data, the GEEVS team will check your data quality and based on that, your data will be aggregated with the current existing
-					data on the database.</li>				 
+				<li>In the data submission form, you must specify the sequencing platform you have used to produce the data. 
+					This is necessary for us to  aggregate your data to the existing data in the database.</li>
+				<li>If you have used GATK in a single sample mode, then it’s better to group your bam files and call the variants in multi-sample mode. 
+					You can find below a short tutorial about how to quickly perform this GATK multi-sample call, perform recalibration and apply recalibration steps.</li>
+				<li>If you are using an older version of GATK in which you have limitation on the number of samples to group together for the multi-sample calling, 
+					then you should upgrade to a newer version of GATK which can be downloaded from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>.</li>
+				<li>If you are using a variant caller other than GATK; which produces variant files other than VCF format, then you must convert your file to VCF format. 
+					For more details on VCF format, click <%= link_to :here, "http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41", target: "_blank", class: "nav_links_body"%>. 
+					You should also check the VCF header format in this page below, where minimum requirements are listed. </li>
+				<li>After the submission of your data, the GEEVS team will check your data quality and your data will be aggregated to existing data on the database.</li>				 
 			</ul>
 		</td>
 		<td></td><td></td><td></td>	
