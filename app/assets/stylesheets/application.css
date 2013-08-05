@@ -94,7 +94,7 @@ body{
 }
 .nav_links:hover {
         color: #888888;
-        text-decoration: blink;
+        text-decoration: none;
 } 
 .nav_links_body{
         color: blue;
@@ -127,9 +127,9 @@ body{
         margin:auto;
         width:1200px;
         /*border-bottom: 2px solid;*/
-        padding: 15px;
+        padding: 10px;
 }
-.Documentation h3{
+.Documentation h2{
 		text-decoration: none;
 }
 .Documentation p{

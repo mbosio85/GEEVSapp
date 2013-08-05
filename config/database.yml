@@ -7,6 +7,7 @@ development:
   adapter: ruby_mysql
   database: GEEVS
   username: geevsUser
+  password: geevspublic
   host: www.ediva.crg.eu
   pool: 5
   timeout: 5000
@@ -24,6 +25,7 @@ production:
   adapter: ruby_mysql
   database: GEEVS
   username: geevsUser
+  password: geevspublic
   host: www.ediva.crg.eu
   pool: 50
   timeout: 5000
