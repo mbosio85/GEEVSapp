@@ -49,7 +49,7 @@ body{
 		margin-top:190px;
 		right:0;
 		left:0;
-		margin-bottom:40px;
+		margin-bottom:70px;
 		position: static;
 }
 .datapartnerPanel{
@@ -159,7 +159,7 @@ body{
 
 .footer{
 		color: #888888;
-		height:3%;
+		height:60px;
 		padding:5px;
 		font-size: smaller;
 		position: fixed;
@@ -282,7 +282,7 @@ body{
 }
 .ContactPage table {
 		text-align: center;
-		width: 800px;
+		width: 900px;
         background-color:#E8E8E8;	
         padding: 20px;
 		border-radius: 5px 5px 5px 5px;	

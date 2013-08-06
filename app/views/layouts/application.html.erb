@@ -10,7 +10,7 @@
 	<div class="Banner">
 		<table align="center">
 		<tr><td>
-			<%= link_to (image_tag('geuBannerNew2.png')), :home %>
+			<%= link_to (image_tag('geuBanner.png')), :home %>
 		</td></tr>
 		</table>
 	</div>
@@ -49,7 +49,7 @@
 	<% if session[:user]%>
 	<div class="nav_banner">
 		<ul class="nav">
-			<li><%= link_to :"GEUVADIS European Exome Variant Server" , :home, class: "nav_links" %></li>
+			<li><%= link_to :GEEVS , :home, class: "nav_links" %></li>
 			<li> | </li>
 			<li><%= link_to :"Search by Coordinate" , :search_chr_pos, class: "nav_links" %></li>
 			<li> | </li>
@@ -84,18 +84,27 @@
 		<div class = "footer">
 		<table align="center">
 			<tr>
-				<td><b>Beta Version</b>
+				<td><b>Beta Version</b></td>
 				<td> &nbsp; | &nbsp; </td>
 				<td>An application of European GEUVADIS Consortium
 				</td>
 				<td> &nbsp; | &nbsp; </td>
 				<td>GEUVADIS Copyright © GEUVADIS 2010,2013. All Rights Reserved.
 				</td>
+				<td>		
+					<%= link_to (image_tag('geuFooter.png')), "http://www.geuvadis.org/web/geuvadis", target: "_blank" %>
 				</td>
+				<td>
+					<%= link_to (image_tag('fp7Footer.gif')), "http://cordis.europa.eu/fp7/home_en.html", target: "_blank" %>
+				</td>
+				<td></td><td></td><td></td>
+				<td>
+				<%= link_to (image_tag('euFooter.png')), "http://ec.europa.eu/index_en.htm", target: "_blank" %>				
+				</td>
+
 			</tr>	
 		</table>
-		</div>
-	
+		</div>	
 	</div>
 	
 
