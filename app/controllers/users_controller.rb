@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_filter :save_login_state, :only => [:newUser ]
+  
   ## SignUp form for new user
   def newUser
   end

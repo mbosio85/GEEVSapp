@@ -10,7 +10,7 @@ body{
        	background-color:#F0F0F0;
 }
 .Banner{
-        height:110px;
+        height:115px;
 		position:fixed;
 		top:0;
 		right:0;
@@ -261,7 +261,6 @@ body{
 	    background-color:#99FF99;
 		border-radius: 3px 3px 3px 3px;	
 		padding: 10px;
-		font: "Lucida Sans Typewriter";
 		font-size:smaller;
         text-align: left;
 }
@@ -271,7 +270,6 @@ body{
 		text-decoration:none;
 }
 .ContactPage {
-		float:center;
        	background-color:#F0F0F0;
         margin:auto;
         width:1000px;

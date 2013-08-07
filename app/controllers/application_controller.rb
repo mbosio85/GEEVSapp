@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   protected
 
+  #This method is for preventing users to access confidential pages withuot logging in 
   def authenticate_user
     if session[:user]
       return true
@@ -13,10 +14,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  #This method for prevent user to access Signup & Login Page without logout
+  #This method is for preventing users to access Signup & Login Page without logout
   def save_login_state
     if session[:user]
-      redirect_to(:controller => 'users', :action => 'login')
+      redirect_to(:controller => 'gapp', :action => 'home')
       return false
     else
       return true
