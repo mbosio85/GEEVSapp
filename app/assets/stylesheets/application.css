@@ -10,20 +10,26 @@ body{
        	background-color:#F0F0F0;
 }
 .Banner{
-        height:115px;
+        height:120px;
 		position:fixed;
 		top:0;
 		right:0;
 		left:0;
         background-color:#000000;
-	    background-image: url('geuLogoLeft.png');
-	    background-repeat:no-repeat;
-	    /*border-bottom-style: groove;
-	    /*border-radius: 5px 5px 5px 5px;*/
+	    /*background-image: url('geuLogoLeft.png');
+	    background-repeat:no-repeat;*/
 }
+/*.Banner a{
+		display: block;
+		float: left;
+		height: 115px;
+		width: 115px;
+		outline: none;
+}*/
+
 .lognav_banner{
 		width:100%;
-		top:110px;
+		top:120px;
 		right:0;
 		left:0;
 		position:fixed;
@@ -46,7 +52,7 @@ body{
 		border-bottom-style: none;*/
 }
 .container{
-		margin-top:160px;
+		margin-top:170px;
 		right:0;
 		left:0;
 		margin-bottom:70px;
