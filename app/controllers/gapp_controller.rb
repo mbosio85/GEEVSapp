@@ -77,7 +77,7 @@ class GappController < ApplicationController
       flash[:notice] = "Wrong Gene name format !"
       flash[:color]= "invalid"
     elsif(params[:gene] =~ /^ENSG/ and params[:chGeneDef] != "Ensembl")
-      redirect_to :action => "home"
+      redirect_to :action => "search_gene"
       flash[:notice] = "Please select \"Ensembl\" in Gene Definition field !"
       flash[:color]= "invalid"        
     elsif(!(params[:af] == "") and !(params[:af] =~ /^\<\>(\s)*[01\s]\.\d(\s)*\,(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01\s]\.\d/))

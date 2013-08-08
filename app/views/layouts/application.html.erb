@@ -9,8 +9,9 @@
 <body>
 	<div class="Banner">
 		<table align="center">
-		<tr><td>
-			<%= link_to (image_tag('geuBanner.png')), :home %>		
+		<tr>
+		<td>
+			<%= link_to (image_tag('geuBanner7.png')), :home %>		
 		</td>
 		</tr>
 		</table>
@@ -36,8 +37,26 @@
 				<% end -%>
 				<% if session[:user] %>
 					<td>
-						<p>LOGOUT<p>
+					<!-- ><div class="nav_banner"> <-->
+					<ul class="nav">
+						<li><%= link_to :GEEVS , :home, class: "nav_links" %></li>
+						<li> | </li>
+						<li><%= link_to :"Search by Coordinate" , :search_chr_pos, class: "nav_links" %></li>
+						<li> | </li>
+						<li><%= link_to :"Search by Gene" , :search_gene, class: "nav_links" %></li>
+						<li> | </li>
+						<li><%= link_to :"Submit Data", :submitdata, class: "nav_links" %></li>
+						<li> | </li>
+						<li><%= link_to :"How to?" , :documentation, class: "nav_links" %></li>
+						<li> | </li>
+						<li><%= link_to :About, :about, class: "nav_links" %></li>
+						<li> | </li>
+						<li><%= link_to :Contact, :contact, class: "nav_links" %></li>
+						<li> | </li>
+					</ul>
+					<!-- >	</div> <-->	
 					</td>
+					<td><p>Logout</p></td>
 					<td>
 						<%= link_to (image_tag('logout.png')), :controller => "users", :action => "logout"%>
 					</td>
@@ -48,26 +67,9 @@
 	</div>
 
 
-	<% if session[:user]%>
-	<div class="nav_banner">
-		<ul class="nav">
-			<li><%= link_to :GEEVS , :home, class: "nav_links" %></li>
-			<li> | </li>
-			<li><%= link_to :"Search by Coordinate" , :search_chr_pos, class: "nav_links" %></li>
-			<li> | </li>
-			<li><%= link_to :"Search by Gene" , :search_gene, class: "nav_links" %></li>
-			<li> | </li>
-			<li><%= link_to :"Submit Data", :submitdata, class: "nav_links" %></li>
-			<li> | </li>
-			<li><%= link_to :"How to?" , :documentation, class: "nav_links" %></li>
-			<li> | </li>
-			<li><%= link_to :About, :about, class: "nav_links" %></li>
-			<li> | </li>
-			<li><%= link_to :Contact, :contact, class: "nav_links" %></li>
-		</ul>
-	</div>
+<!-- >	<% if session[:user]%>
 	<% end -%>
-
+<-->
 
 	
 		<% if flash[:color]== "valid" %>
@@ -90,20 +92,17 @@
 				<td> &nbsp; | &nbsp; </td>
 				<td>An application of the FP7 GEUVADIS Consortium (261123)
 				</td>
-				<td> &nbsp; | &nbsp; </td>
-				<td>GEUVADIS Copyright © GEUVADIS 2010,2013. All Rights Reserved.
-				</td>
 				<td></td><td></td><td></td>
 				<td>		
 					<%= link_to (image_tag('geuFooter.png')), "http://www.geuvadis.org/web/geuvadis", target: "_blank" %>
 				</td>
 				<td></td><td></td><td></td>
 				<td>
-					<%= link_to (image_tag('fp7Footer.gif')), "http://cordis.europa.eu/fp7/home_en.html", target: "_blank" %>
+				<%= link_to (image_tag('euFooter.png')), "http://ec.europa.eu/index_en.htm", target: "_blank" %>
 				</td>
 				<td></td><td></td><td></td>
 				<td>
-				<%= link_to (image_tag('euFooter.png')), "http://ec.europa.eu/index_en.htm", target: "_blank" %>				
+				<%= link_to (image_tag('fp7Footer.gif')), "http://cordis.europa.eu/fp7/home_en.html", target: "_blank" %>				
 				</td>
 
 			</tr>	
