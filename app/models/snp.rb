@@ -8,7 +8,7 @@ class Snp
   def self.searchChrPos(chromosome, start_pos, end_pos, platform, genedef, function, varfunction, af)
     
     qry = ""
-    
+    afreq = ""
     ## clean gene def
     if genedef == "UCSC/Known"
       genedef = "UCSC"
@@ -24,19 +24,26 @@ class Snp
       varfunction = varfunction+" SNV"
     end
 
+    ## clean for platform 
+    if (platform == 'Solid')
+      afreq = "S.AF_solid"        
+    else
+      afreq = "S.AF"
+    end
+
     
     if (function == "All" && varfunction == "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE S.chromosome = '"+chromosome+"' 
-      AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND S.AF "+af+ " limit 5000";
+      AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND "+afreq+" "+af+ " limit 5000";
     elsif(function == "All" && varfunction != "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE S.chromosome = '"+chromosome+"' 
-      AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+varfunction+"' AND S.AF "+af+ " limit 5000";
+      AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
     elsif(function != "All" && varfunction == "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE S.chromosome = '"+chromosome+"' 
-      AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND S.AF "+af+ " limit 5000";
+      AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND "+afreq+" "+af+ " limit 5000";
     else
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE S.chromosome = '"+chromosome+"' 
-      AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND R.function_snp = '"+varfunction+"' AND S.AF "+af+ " limit 5000";
+      AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND R.function_snp = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
     end
     
         
@@ -86,6 +93,7 @@ class Snp
   def self.searchGene(gene, platform, genedef, function, varfunction, af)
     
     qry = ""
+    afreq = ""
     
     ## clean gene def
     if (genedef == "UCSC/Known")
@@ -97,6 +105,13 @@ class Snp
       val1,val2 = values.split(/,/)
       af = "between "+val1+ " and "+val2
     end
+    ## clean for platform 
+    if (platform == 'Solid')
+      afreq = "S.AF_solid"        
+    else
+      afreq = "S.AF"
+    end
+
 
     ## clean function
     if varfunction != "All"
@@ -105,16 +120,16 @@ class Snp
     
     if (function == "All" && varfunction == "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
-      AND S."+ platform + " is not NULL AND S.AF "+af+ " limit 5000";
+      AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
     elsif(function == "All" && varfunction != "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
-      AND S."+ platform + " is not NULL AND R.function_snp = '"+varfunction+"' AND S.AF "+af+ " limit 5000";
+      AND S."+ platform + " is not null AND R.function_snp = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";
     elsif(function != "All" && varfunction == "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
-      AND S."+ platform + " is not NULL AND R.exonic_function = '"+ function + "' AND S.AF "+af+ " limit 5000";
+      AND S."+ platform + " is not null AND R.exonic_function = '"+ function + "' AND "+afreq+"  "+af+ " limit 5000";
     else
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
-      AND S."+ platform + " is not NULL AND R.exonic_function = '"+ function + "'  AND R.function_snp = '"+varfunction+"' AND S.AF "+af+ " limit 5000";    
+      AND S."+ platform + " is not null AND R.exonic_function = '"+ function + "'  AND R.function_snp = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";    
     end
         
     ## form query

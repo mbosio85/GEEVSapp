@@ -47,6 +47,11 @@ class GappController < ApplicationController
       @searchPanelStartPos = params[:start_pos]
       @searchPanelEndPos = params[:end_pos]
       @searchPanelAF = params[:af]
+      @searchPanelPlatform = params[:chPlatform]
+      @searchPanelGeneDef = params[:chGeneDef]
+      @searchPanelFunction = params[:chFunction]
+      @seerchPanelVarFunction = params[:varfunction]
+
       (@res,rlen) = Snp.searchChrPos(params[:chromosome],params[:start_pos],params[:end_pos],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:varfunction],params[:af])
       if rlen == 0
         redirect_to :action => "search_chr_pos"
@@ -87,6 +92,11 @@ class GappController < ApplicationController
     else
       @searchPanelGene = params[:gene]
       @searchPanelAF = params[:af]
+      @searchPanelPlatform = params[:chPlatform]
+      @searchPanelGeneDef = params[:chGeneDef]
+      @searchPanelFunction = params[:chFunction]
+      @seerchPanelVarFunction = params[:varfunction]
+      
       (@res,rlen) = Snp.searchGene(params[:gene],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:varfunction],params[:af])
       if rlen == 0
         redirect_to :action => "search_gene"
