@@ -10,6 +10,7 @@ GEEVSapp::Application.routes.draw do
     match "search_chr_pos", :to => 'gapp#search_chr_pos'
     match "search_gene", :to => 'gapp#search_gene'
     match "submitdata", :to => 'gapp#submitdata'
+    match "stat", :to => 'gapp#stat'
 
   #match "login", :to => 'users#login'
   

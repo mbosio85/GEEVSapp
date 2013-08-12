@@ -201,5 +201,9 @@ class GappController < ApplicationController
   def contact
   end
   
+  ## statistics
+  def stat
+    
+  end
  
 end
