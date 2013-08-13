@@ -2,8 +2,10 @@
 <h2>GEEVS Data Analysis	(Beta Version)</h2>
 
 	<p>
-	For the beta version release, aggregation has been done between Munich (209 samples) and Barcelona (200 samples). Data from Nijemegen (164 samples)
-	has been kept separate as it is from a different sequencing platform. All the reported variants were filtered in the following manner:  
+	Aggregation of variant frequencies from multiple studies has been done separately for Illumina and Solid platform based calls.
+	Illumina based SNV calls have been produced by GATK UnifiedGenotyper's multi-sample calling,separately for each study of at least 50 cases.
+	Resulting VCF files need to fulfill various filter criteria to be considered for aggregation, e.g. percent recall in dbSNP, 
+	TiTv ratio as well as high correlation to 1000genomes and EVS. Furthermore all reported variants are filtered in the following manner:	
 	</br>
 	</p>
 	<ul>
@@ -14,7 +16,7 @@
 </div>
 
 <div class = "Documentation">
-<h2>Percentage of knowns (ref: dbSNP v.137) for all sites and aggregation</h2>
+<h2>Percentage of known SNVs (dbSNP v.137)</h2>
 	<table>
 		<tr><td>
 		<%= image_tag('KnownNEW_2.png')%>
@@ -23,7 +25,7 @@
 </div>
 
 <div class = "Documentation">
-<h2>TiTv profile for all sites and aggregation</h2>
+<h2>Transition/Transversion (TiTv) ratio</h2>
 	<table>
 		<tr><td>
 		<%= image_tag('titvNEW_2.png')%>
@@ -32,7 +34,7 @@
 </div>
 
 <div class = "Documentation">
-<h2>Frequency against 1000 Genomes for all sites and aggregation</h2>
+<h2>SNV allele frequency correlation GEEVS vs. 1000 Genomes</h2>
 	<table>
 		<tr><td>
 		<%= image_tag('freq_plots_1K_2.png')%>
@@ -44,7 +46,7 @@
 </div>
 
 <div class = "Documentation">
-<h2>Frequency against Washington Exome Variant Server for all sites and aggregation</h2>
+<h2>SNV allele frequency correlation GEEVS vs. Exome Variant Server (EVS)</h2>
 	<table>
 		<tr><td>
 		<%= image_tag('freq_plots_EVS_2.png')%>

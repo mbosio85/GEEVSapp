@@ -7,7 +7,7 @@ class GappController < ApplicationController
   def home
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
-    @exonicFunction =[ 'All','Exonic','Splicing','Intronic''UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exoic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
+    @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']
   end
 
@@ -16,7 +16,7 @@ class GappController < ApplicationController
     @chr = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','X','Y','MT']
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
-    @exonicFunction =[ 'All','Exonic','Splicing','Intronic''UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exoic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
+    @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']
   end
   
@@ -24,7 +24,7 @@ class GappController < ApplicationController
     @chr = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','X','Y','MT']
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
-    @exonicFunction =[ 'All','Exonic','Splicing','Intronic''UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exoic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
+    @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']    
     
     
@@ -66,14 +66,14 @@ class GappController < ApplicationController
   def search_gene
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
-    @exonicFunction =[ 'All','Exonic','Splicing','Intronic''UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exoic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
+    @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']    
   end
   
   def search_gene_show
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
-    @exonicFunction =[ 'All','Exonic','Splicing','Intronic''UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exoic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
+    @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']
     
     ## validation appropriate fields and then query the model
@@ -110,7 +110,7 @@ class GappController < ApplicationController
   def search
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
-    @exonicFunction =[ 'All','Exonic','Splicing','Intronic''UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exoic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
+    @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']
 
 

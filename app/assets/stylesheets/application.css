@@ -51,6 +51,7 @@ body{
 		left:0;
 		margin-bottom:70px;
 		position: static;
+		min-height:700px;
 }
 .datapartnerPanel{
 		position: fixed;
@@ -140,6 +141,9 @@ body{
         text-align: left;
         margin: auto;
 }
+.search_res{
+		height: inherit;
+}
 .search_res table tr{
         text-align: center;
         margin: auto;
@@ -157,7 +161,6 @@ body{
 .search_res table th td{
         padding: 6px 16px 6px 6px;
 }
-
 .footer{
 		color: #FFFFFF;
 		height:60px;

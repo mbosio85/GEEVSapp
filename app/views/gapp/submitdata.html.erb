@@ -6,19 +6,19 @@
 	
 	<tr>	
 		<td>
-			You should follow the instructions listed below for submitting data to GEUVADIS European Exome Variant Server.
+			To submit SNP data to the Geuvadis European Exome Variant Server please follow the instructions below.
 			<ul>
 				<li>To ascertain anonymity of the investigated individuals GEEVS can only accept anonymized, aggregated VCF files.</li>
-				<li>In the data submission form, you must specify the sequencing platform you have used to produce the data. 
-					This is necessary for us to  aggregate your data to the existing data in the database.</li>
-				<li>If you have used GATK in a single sample mode, then it’s better to group your bam files and call the variants in multi-sample mode. 
-					You can find below a short tutorial about how to quickly perform this GATK multi-sample call, perform recalibration and apply recalibration steps.</li>
-				<li>If you are using an older version of GATK in which you have limitation on the number of samples to group together for the multi-sample calling, 
-					then you should upgrade to a newer version of GATK which can be downloaded from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>.</li>
-				<li>If you are using a variant caller other than GATK; which produces a variant file other than VCF format, then you must convert your file to VCF format. 
-					For more details on VCF format, click <%= link_to :here, "http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41", target: "_blank", class: "nav_links_body"%>. 
-					You should also check the VCF header format in this page below, where minimum requirements are listed. </li>
-				<li>After the submission of your data, the GEEVS team will check your data quality and your data will be aggregated to existing data on the database.</li>				 
+				<li>In the data submission form, please specify the sequencing platform used to produce the data. This information is 
+					necessary as variant frequencies are aggregated by platform.</li>
+				<li>We strongly recommend using GATKs multi-sample calling to assure high correlation between results and to pass GEEVS quality filter. 
+					Please find below a short tutorial.</li>
+				<li>Older versions of GATK had limitations on the number of samples used for multi-sample calling. Please upgrade to 
+					current version of GATK, which can be downloaded from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>.</li>
+				<li>If you are using a variant caller other than GATK please convert its output file to aggregate VCF format. For more details on VCF 
+					click <%= link_to :here, "http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41", target: "_blank", class: "nav_links_body"%>. 
+					Please make sure the VCF header format is compatible with our minimum requirements listed below. </li>
+				<li>After submission of your data the GEEVS team will perform quality control and aggregate allele frequencies with the existing data.</li>				 
 			</ul>
 		</td>
 		<td></td><td></td><td></td>	
@@ -83,16 +83,14 @@
 <h2>
 	Data Preparation Tutorial
 </h2>
-
-
-	This tutorial has been prepared for a quick overview of the <b>GATK multi-sample calling</b> procedure from the <%= link_to "GATK-best practices","http://www.broadinstitute.org/gatk/guide/",target: "_blank", class: "nav_links_body" %>.  
-	If you don't use GATK, you can get started by downloading from 
-	<%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>. You also need to download the GATK bundle 
-	resource for performing variant recalibration and you can download the updated bundle resource from <%= link_to :"here", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body" %>.
-
+	This tutorial gives a quick overview of GATK UnifiedGenotyper's multi-sample calling procedure from the 
+	<%= link_to "GATK-best practices","http://www.broadinstitute.org/gatk/guide/",target: "_blank", class: "nav_links_body" %> website. 
+	You can download GATK from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>. 
+	To perform this tutorial please also download the GATK bundle resource for performing variant recalibration and the updated bundle resource from 
+	<%= link_to :"here", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body" %>.
 
 <ul>
-	<li>At first, you should collect all sample bam files complete paths in a single file your_collection_bams.list.</li>
+	<li>First collect complete paths of all sample bam files in a single file your_collection_bams.list.</li>
 	
 	<p>		
 	<b>your_collection_bams.list</b><br>
@@ -102,7 +100,7 @@
 	...
 	</p>
 
-	<li>Next, perform the GATK multisample call.</li>
+	<li>Perform GATK multi-sample calling.</li>
 	<p>
 		BAMS=your_collection_bams.list<br>
 		CPU=number of CPU cores according to your computational system capabilities<br>
@@ -110,7 +108,7 @@
 		java -jar GenomeAnalysisTK.jar -R hg19.fasta -T UnifiedGenotyper -I $BAMS --num_threads $CPU -o multisampleInitialCall.vcf -A DepthPerAlleleBySample --intervals $PROBE<br>
 	</p>
 
-	<li>Perform the variant recalibration now. As we are currently accepting single nucleotide variants, this step only shows you how to do variant recalibration for SNVs.</li>
+	<li>Perform variant recalibration. (GEEVS is currently accepting SNPs only, therefore this step only shows you how to do variant recalibration for SNVs.)</li>
 	
 	<p>
 		GATKRS=path_to_your_GATK_bundle_resource<br><br> 
@@ -120,7 +118,7 @@
 		$GATKRS/dbsnp_137.hg19.vcf -an QD -an HaplotypeScore -an MQRankSum -an ReadPosRankSum -an FS -an MQ -an InbreedingCoeff -mode SNP
 	</p>
 
-	<li>Finally, you have to apply the recalibration to your initial calls.</li>
+	<li>Finally apply the recalibration to the initial calls.</li>
 	
 	<p>
 		java -Xmx4g -jar GenomeAnalysisTK.jar -T ApplyRecalibration -R hg19.fasta -input multisampleInitialCall.vcf -tranchesFile multisampleInitialCall.vcf.tranches 
@@ -135,13 +133,12 @@
 <h2>
 	Sample VCF file format
 </h2>
-
-	Your VCF file should be of version '4.1'. Apart from traditional VCF file format structure, you should include some more details in the HEADER and your file 
-	must contain some specific INFOs. You can learn more about the details of the VCF format <%= link_to :"here", "http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41", target: "_blank", class: "nav_links_body" %>.
-	Specifications are shown below. 
+	VCF files should be of version '4.1'. Apart from the default VCF file format structure GEEVS requires to add some additional information in the VCF HEADER. 
+	To learn more about the VCF format please click <%= link_to :"here", "http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41", target: "_blank", class: "nav_links_body" %>.
+	GEEVS VCF Specifications are shown below.
 
 <ul>
-	<li> VCF file HEADER should be lke this :</li>
+	<li> VCF file HEADER</li>
 
 	<p>		
 ##fileformat=VCFv4.1<br>
@@ -160,7 +157,7 @@
 <%=  "##Analysis=<Alignment=bwa v0.7.5a,VariantCalling=GenomeAnalysisTK v 2.6-5 + samtools mpileup + shore, CallingType = Multi-sample>" %><br>
 	</p>
 
-	<li>VCF mandatory INFO tags :</li>
+	<li>VCF mandatory INFO tags</li>
 
 <p>
 <%= "##INFO=<ID=AC,Number=A,Type=Integer,Description=\"Allele count in genotypes, in the order of ALT allele listed\">" %><br>

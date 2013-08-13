@@ -2,11 +2,12 @@
 <h2>Search variants by Chromosome and Position</h2>
 
 	<p>
-	You can search variants by providing appropriate chromosome, start and end position. These three fields are mandatory for searching variants. 
-	You can also modify your search criteria such as select which sequencing platform you want to query. Selecting a similar platform for your 
-	sequencing projects can be more meaningful, since variant caller’s result depend on the data provided. You can also select the pre-annotated gene definition, 
-	exonic function and variant function. Finally, there is another optional filter criteria Allele Frequency. You can be dynamic while using this field in various ways. 
-	It supports greater than (>), greater than or equal (>=) and so on. Supported formats are:</br>
+	Variants can be searched by providing appropriate chromosome, start and end position. These fields are mandatory. 
+	To limit search results filter criteria can optionally be modified, such as sequencing platform, allele frequency range, 
+	gene annotation and variant function. Our comparison has revealed substantial differences of SNP sets between sequencing platforms, 
+	thus we suggest to select the same platform used in your study for comparative analysis. GEEVS currently provides gene annotations 
+	from relative to RefSeq, Ensembl or UCSC. The search can further be restricted to specific annotation features (e.g. exotic) or variant function 
+	(e.g. non synonymous SNV). The allele frequency filter is used to obtain a subset of SNVs with limited range of allele frequencies. Supported query formats for AF are:
 	</p>
 	<ul>
       	<li> Greater than ( > )</li>
@@ -24,13 +25,11 @@
 <h2>Search variants by Gene</h2>
 	
 	<p>
-	You can also search variants by HGNC approved Gene Names or Ensembl gene identifiers. The other fields are similar to “Chromsome and Position” search panel. 
-	If you are searching variants by Ensembl gene identifiers, then you must select Ensembl gene definition in the Gene Definition select box. You can find more about 
-	HGNC gene names <%= link_to :here , "http://www.genenames.org/", class: "nav_links_body" %>. For Ensembl gene identifers you can check 
-	<%= link_to :here , "http://www.ensembl.org/index.html", class: "nav_links_body" %>. 
-	
+	Variants can be searched by providing an approved HGNC gene name or an Ensembl gene identifier. Ensembl gene identifiers only work if the Ensembl gene annotation 
+	is selected from the Gene Definition drop down menu. All other fields are optional and similar to the “Chromsome and Position” search panel explained above. 
+	Please find more info about HGNC gene names <%= link_to :here , "http://www.genenames.org/", class: "nav_links_body" %>
+	 and Ensembl gene identifers <%= link_to :here , "http://www.ensembl.org/index.html", class: "nav_links_body" %>.	
 	</p>
-	
 </div>
 
 
