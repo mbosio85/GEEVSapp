@@ -9,6 +9,7 @@ class GappController < ApplicationController
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']
+    
   end
 
   ## search variants by chr and pos
@@ -115,29 +116,34 @@ class GappController < ApplicationController
 
 
     ## validate search term
-    if (params[:searchTerm] =~ /\:/)
-      ## checking for chr:pos1-pos2 format
-      if (params[:searchTerm] !~ /^[cC]hr(\d)+\:(\d)+\-(\d)+/ and params[:searchTerm] !~ /^[cC]hr[XY]\:(\d)+\-(\d)+/) 
+    if (params[:searchTerm] == "")
+        redirect_to :action => "home"
+        flash[:notice] = "Your search term can't be empty !"
+        flash[:color]= "invalid"      
+    else
+      if (params[:searchTerm] =~ /\:/)
+        ## checking for chr:pos1-pos2 format
+        if (params[:searchTerm] !~ /^[cC]hr(\d)+\:(\d)+\-(\d)+/ and params[:searchTerm] !~ /^[cC]hr[XY]\:(\d)+\-(\d)+/) 
         redirect_to :action => "home"
         flash[:notice] = "Wrong Chromosome and Position format !"
         flash[:color]= "invalid"
-      else
+        else
         chrm,poss = params[:searchTerm].split(/\:/)
         startpos,endpos = poss.split(/\-/)
         chrm = chrm[3,chrm.length]
-        if (chrm.length > 2 or chrm == "0")
+          if (chrm.length > 2 or chrm == "0")
           redirect_to :action => "home"
           flash[:notice] = "Wrong Chromosome value !"
           flash[:color]= "invalid"
-        elsif ((startpos.length > 11) and (endpos.length > 11))
+          elsif ((startpos.length > 11) and (endpos.length > 11))
           redirect_to :action => "home"
           flash[:notice] = "Wrong Position values !"
           flash[:color]= "invalid"
-        elsif(!(params[:af] == "") and !(params[:af] =~ /^\<\>(\s)*[01\s]\.\d(\s)*\,(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01\s]\.\d/))
+          elsif(!(params[:af] == "") and !(params[:af] =~ /^\<\>(\s)*[01\s]\.\d(\s)*\,(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01\s]\.\d/))
           redirect_to :action => "home"
           flash[:notice] = "Wrong Allele Frequency format !"
           flash[:color]= "invalid"     
-        else
+          else
           @searchPanelTerm = params[:searchTerm]
           @searchPanelAF = params[:af]
           @searchPanelPlatform = params[:chPlatform]
@@ -149,12 +155,12 @@ class GappController < ApplicationController
             redirect_to :action => "home"
             flash[:notice] = "No variants in the database for your query search term ! Try different Chromosome and Positions !!"
             flash[:color]= "invalid"
-        end
-       end   
-      end
-    else
+          end
+          end   
+         end
+     else
     ## checking for gene name format
-      if (params[:searchTerm] =~ /\,/ and params[:searchTerm].length > 50)
+       if (params[:searchTerm] =~ /\,/ and params[:searchTerm].length > 50)
         redirect_to :action => "home"
         flash[:notice] = "Wrong Gene name format !"
         flash[:color]= "invalid"
@@ -175,12 +181,13 @@ class GappController < ApplicationController
         @seerchPanelVarFunction = params[:varfunction]
         (@res,rlen) = Snp.searchGene(params[:searchTerm],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:varfunction],params[:af])
         if rlen == 0
-          redirect_to :action => "home"
-          flash[:notice] = "Either not a valid HGNC symbol/Ensembl gene indentifier or no variants in the database for your query gene !"
+        #  redirect_to :action => "search"
+          flash[:notice] = "Either not a valid HGNC symbol/Ensembl gene indentifier or no variants in the database for your search term and filters !"
           flash[:color]= "invalid"
         end
       end 
-    end
+      end
+   end
   
   end
 
