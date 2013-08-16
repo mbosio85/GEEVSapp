@@ -118,18 +118,48 @@ class Snp
       varfunction = varfunction+" SNV"
     end
     
-    if (function == "All" && varfunction == "All")
+    ## form query
+    if (gene !~ /^ENSG/ and genedef == "Ensembl")
+      
+      if (function == "All" && varfunction == "All")
+      #select S.*,R.snp_id,H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID 
+      #from GEEVS.Table_SNP as S inner join GEEVS.Table_SNP_Annotation_Ensembl as R inner join GEEVS.Table_Gene_symbol_HGNC as H 
+      #on S.ID = R.snp_id and R.gene_name = H.ensembl_id;  
+                
+      qry = "select S.*,R.snp_id,H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
+      from GEEVS.Table_SNP as S inner join GEEVS.Table_SNP_Annotation_Ensembl as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+      on S.ID = R.snp_id and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
+      elsif(function == "All" && varfunction != "All")
+      qry = "select S.*,R.snp_id,H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
+      from GEEVS.Table_SNP as S inner join GEEVS.Table_SNP_Annotation_Ensembl as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+      on S.ID = R.snp_id and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' 
+      AND S."+ platform + " is not null AND R.function_snp = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";
+      elsif(function != "All" && varfunction == "All")
+      qry = "select S.*,R.snp_id,H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
+      from GEEVS.Table_SNP as S inner join GEEVS.Table_SNP_Annotation_Ensembl as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+      on S.ID = R.snp_id and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' 
+      AND S."+ platform + " is not null AND R.exonic_function = '"+ function + "' AND "+afreq+"  "+af+ " limit 5000";
+      else
+      qry = "select S.*,R.snp_id,H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
+      from GEEVS.Table_SNP as S inner join GEEVS.Table_SNP_Annotation_Ensembl as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+      on S.ID = R.snp_id and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"'
+      AND S."+ platform + " is not null AND R.exonic_function = '"+ function + "'  AND R.function_snp = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";    
+      end
+            
+    else
+      if (function == "All" && varfunction == "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
       AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
-    elsif(function == "All" && varfunction != "All")
+      elsif(function == "All" && varfunction != "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
       AND S."+ platform + " is not null AND R.function_snp = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";
-    elsif(function != "All" && varfunction == "All")
+      elsif(function != "All" && varfunction == "All")
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
       AND S."+ platform + " is not null AND R.exonic_function = '"+ function + "' AND "+afreq+"  "+af+ " limit 5000";
-    else
+      else
       qry = "select S.*,R.* from Table_SNP as S inner join Table_SNP_Annotation_"+genedef+" as R on S.ID = R.snp_id WHERE R.gene_name = '"+ gene +"' 
       AND S."+ platform + " is not null AND R.exonic_function = '"+ function + "'  AND R.function_snp = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";    
+      end         
     end
         
     ## form query

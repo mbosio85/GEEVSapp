@@ -52,6 +52,7 @@ body{
 		margin-bottom:70px;
 		position: static;
 		min-height:700px;
+		min-width: 1400px;
 }
 .datapartnerPanel{
 		position: fixed;
@@ -213,6 +214,10 @@ body{
 }
 .sfieldOptionalgene{
 		width: 510px;
+		border-radius: 5px 5px 5px 5px;	
+}
+.sfieldPanelSearchBox{
+		width: 200px;
 		border-radius: 5px 5px 5px 5px;	
 }
 .sfieldPanel{

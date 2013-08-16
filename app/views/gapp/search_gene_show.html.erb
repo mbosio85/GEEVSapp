@@ -4,7 +4,7 @@
        	<tr>
        	   <td>
        	   <%= form_tag(:controller => 'gapp',:action => 'search_gene_show') do %>
-		   Gene: <%= text_field_tag :gene, @searchPanelGene, :class => 'sfieldPanel' %>
+		   Gene: <%= text_field_tag :gene, @searchPanelGene, :class => 'sfieldPanelSearchBox' %>
            Platform: <%= select_tag "chPlatform", options_for_select(@platform,@searchPanelPlatform) %> &nbsp;
            Gene definition: <%= select_tag "chGeneDef", options_for_select(@genedefinition, @searchPanelGeneDef) %>  &nbsp;
            Exonic Function: <%= select_tag "chFunction", options_for_select(@exonicFunction, @searchPanelFunction)  %>  &nbsp;
@@ -75,7 +75,17 @@
 			<td><%= r32 %></td>
 			<td><%= r33 %></td>
 			<td><%= r38 %></td>
+			<% if (r39.nil?) -%>
 			<td><%= r39 %></td>
+			<% elsif (r39 =~ /^NM/ or r39 =~ /^NR/) -%>
+			<td><%= link_to(r39, "http://www.ncbi.nlm.nih.gov/nuccore/"+r39, target: "_blank") %></td>
+			<% elsif (r39 =~ /^uc/) -%>
+			<td><%= link_to(r39, "http://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene="+r39, target: "_blank") %></td>
+			<% elsif (r39 =~ /^ENST/) -%>
+			<td><%= link_to(r39, "http://www.ensembl.org/Homo_sapiens/Transcript/Summary?t="+r39, target: "_blank") %></td>
+			<% else -%>
+			<td><%= r39 %></td>
+			<% end -%>
 			<td><%= r40 %></td>
 			<td><%= r41 %></td>
 			<td><%= r42 %></td>
@@ -91,7 +101,13 @@
 			<td><%= r17 %></td>
 			<td><%= r18 %></td>
 			<td><%= r19 %></td>
+			<% if (r20.nil?) -%>
 			<td><%= r20 %></td>
+			<% elsif (r20 =~ /^rs/) -%>
+			<td><%= link_to(r20, "http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?type=rs&rs="+r20, target: "_blank") %></td>
+			<% else -%>
+			<td><%= r20 %></td>
+			<% end -%>
 			<td><%= r21 %></td>
 			<td><%= r22 %></td>
 			<td><%= r23 %></td>
@@ -117,7 +133,17 @@
 			<td><%= r35 %></td>
 			<td><%= r36 %></td>
 			<td><%= r38 %></td>
+			<% if (r39.nil?) -%>
 			<td><%= r39 %></td>
+			<% elsif (r39 =~ /^NM/ or r39 =~ /^NR/) -%>
+			<td><%= link_to(r39, "http://www.ncbi.nlm.nih.gov/nuccore/"+r39, target: "_blank") %></td>
+			<% elsif (r39 =~ /^uc/) -%>
+			<td><%= link_to(r39, "http://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene="+r39, target: "_blank") %></td>
+			<% elsif (r39 =~ /^ENST/) -%>
+			<td><%= link_to(r39, "http://www.ensembl.org/Homo_sapiens/Transcript/Summary?t="+r39, target: "_blank") %></td>
+			<% else -%>
+			<td><%= r39 %></td>
+			<% end -%>
 			<td><%= r40 %></td>
 			<td><%= r41 %></td>
 			<td><%= r42 %></td>
@@ -133,7 +159,13 @@
 			<td><%= r17 %></td>
 			<td><%= r18 %></td>
 			<td><%= r19 %></td>
+			<% if (r20.nil?) -%>
 			<td><%= r20 %></td>
+			<% elsif (r20 =~ /^rs/) -%>
+			<td><%= link_to(r20, "http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?type=rs&rs="+r20, target: "_blank") %></td>
+			<% else -%>
+			<td><%= r20 %></td>
+			<% end -%>
 			<td><%= r21 %></td>
 			<td><%= r22 %></td>
 			<td><%= r23 %></td>

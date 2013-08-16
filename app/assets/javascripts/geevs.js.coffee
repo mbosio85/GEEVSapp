@@ -6,7 +6,7 @@
 jQuery ->
   $('#variants').dataTable( {
     "sScrollX": "100%",
-    "sScrollY": "500",
+    "sScrollY": "470",
     "iDisplayLength": 50,
     "bScrollCollapse": true
   });
