@@ -7,24 +7,32 @@ class User
   end
   
   ## create a new account request
-  def self.handleAccountRequest(username,email)
+  def self.handleAccountRequest(username,email,ip)
     ## create file
     f = "AccountRequest/"+email+'_'+username+'.txt'
-    ## open file handler
-    file = File.open(f, 'w') 
-    ## write username and email
-    file.write(username+"\n")
-    file.write(email+"\n")
-    ## close file handler
-    file.close 
     
-    return "success"
+    ## check non-empty file existence with the same username and email
+    if (File.exist?(f) and ! (File.zero?(f)))
+      return "fail"
+    else ## file not found.. go further
+      ## open file handler
+      file = File.open(f, 'w') 
+      ## write username and email
+      file.write(username+"\n")
+      file.write(email+"\n")
+      file.write(ip+"\n")
+      ## close file handler
+      file.close 
+      return "success"      
+    end
   end
   
   
   ## create new user
-  def self.createSubmituser(username,email,pass)
-    
+  def self.createSubmituser(username,email,pass, sig)
+
+    ## check admin signature
+    if sig == "rrahman"
     ## check email in the database
     qryEmail = "select * from Table_users where email = '"+ email +"';"
     ccU = User.new.self
@@ -54,11 +62,13 @@ class User
     
         ## return message
         return "success"      
-      end
-      
-    end
-    
-    ccU.close
+      end    
+      ccU.close
+     end
+     else
+       return "sig"
+     end  
+     
   end
     
   ## encrypt_password

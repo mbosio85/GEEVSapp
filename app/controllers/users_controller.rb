@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   end
 
   def accountRequestHandler
+    clientIp = request.remote_ip
     ## check signup parameter values
     if (params[:username] == "" or params[:email]=="")
       redirect_to :accountRequest
@@ -22,13 +23,19 @@ class UsersController < ApplicationController
       flash[:notice] = "Not a valid email format ! Be sure to provide an email that you check frequently !!"
       flash[:color]= "invalid"
     else
-      msg = User.handleAccountRequest(params[:username],params[:email])
+      msg = User.handleAccountRequest(params[:username],params[:email], clientIp)
     end      
     
     if msg == "success"
       redirect_to :accountRequest
       flash[:notice] = "Successfully account request submitted ! GEEVS team will contact you soon !!"
       flash[:color]= "valid"      
+    elsif msg == "fail"
+      redirect_to :accountRequest
+      flash[:notice] = "You have already requested for an account ! GEEVS team will contact you soon !!"
+      flash[:color]= "invalid"      
+    else
+      
     end
   end
 
@@ -57,10 +64,14 @@ class UsersController < ApplicationController
       flash[:notice] = "Password and password confirmation mismatch ! Carefully enter again !!"
       flash[:color]= "invalid"
     else
-      @msg = User.createSubmituser(params[:username],params[:email],params[:password])
+      @msg = User.createSubmituser(params[:username],params[:email],params[:password],params[:signature])
     end
     
-   if (@msg == "email")
+   if (@msg == "sig")
+      redirect_to :newUser
+      flash[:notice] = "Admin Signature Failure !!"
+      flash[:color]= "invalid"      
+   elsif (@msg == "email")
       redirect_to :newUser
       flash[:notice] = "Email already exists in the database ! If you have forgotten your password contact GEEVS team !!"
       flash[:color]= "invalid"
