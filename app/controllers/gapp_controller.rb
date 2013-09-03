@@ -27,7 +27,7 @@ class GappController < ApplicationController
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']    
-    
+     
     
     ## validation appropriate fields and then query the model
     if (params[:chromosome] == "")

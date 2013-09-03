@@ -1,10 +1,37 @@
 class UsersController < ApplicationController
 
-  before_filter :save_login_state, :only => [:newUser ]
+  before_filter :save_login_state, :only => [:accountRequest, :accountRequestHandler]
+  before_filter :adminCreateUser, :only => [:newUser, :create]
   
   ## SignUp form for new user
   def newUser
   end
+
+  ## Account request
+  def accountRequest
+  end
+
+  def accountRequestHandler
+    ## check signup parameter values
+    if (params[:username] == "" or params[:email]=="")
+      redirect_to :accountRequest
+      flash[:notice] = "You should complete all the fields !"
+      flash[:color]= "invalid"
+    elsif ( params[:email] !~ /^[a-zA-Z0-9._%+-]+\@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/ ) ## initial check for valid email address format
+      redirect_to :accountRequest
+      flash[:notice] = "Not a valid email format ! Be sure to provide an email that you check frequently !!"
+      flash[:color]= "invalid"
+    else
+      msg = User.handleAccountRequest(params[:username],params[:email])
+    end      
+    
+    if msg == "success"
+      redirect_to :accountRequest
+      flash[:notice] = "Successfully account request submitted ! GEEVS team will contact you soon !!"
+      flash[:color]= "valid"      
+    end
+  end
+
 
   ## create new user
   def create
@@ -13,7 +40,7 @@ class UsersController < ApplicationController
       redirect_to :newUser
       flash[:notice] = "You should complete all the fields !"
       flash[:color]= "invalid"
-    elsif (! params[:email] =~ /^[A-Z0-9._%+-]+\@[A-Z0-9.-]+\.[A-Z]{2,4}/) ## initial check for valid email address format
+    elsif (params[:email] !~ /^[a-zA-Z0-9._%+-]+\@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) ## initial check for valid email address format
       redirect_to :newUser
       flash[:notice] = "Not a valid email format !"
       flash[:color]= "invalid"
@@ -39,7 +66,7 @@ class UsersController < ApplicationController
       flash[:color]= "invalid"
     elsif (@msg == "usr")
       redirect_to :newUser
-      flash[:notice] = "Username alreadt taken ! Try again !!"
+      flash[:notice] = "Username already taken ! Try again !!"
       flash[:color]= "invalid"
     elsif (@msg == "success")
       redirect_to :newUser
@@ -68,7 +95,7 @@ class UsersController < ApplicationController
   
   def logout     
     session[:user] = nil
-    redirect_to :newUser
+    redirect_to :accountRequest
   end
 
 end

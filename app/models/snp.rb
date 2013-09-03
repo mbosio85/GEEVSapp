@@ -174,4 +174,5 @@ class Snp
     return res,res.num_rows
   end  
  
+ 
 end

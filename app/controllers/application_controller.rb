@@ -7,14 +7,14 @@ class ApplicationController < ActionController::Base
     if session[:user]
       return true
     else
-      redirect_to(:controller => 'users', :action => 'newUser')
+      redirect_to(:controller => 'users', :action => 'accountRequest')
       # set current_user by the current user object
       #@current_user = User.find session[:user] 
       return false
     end
   end
 
-  #This method is for preventing users to access Signup & Login Page without logout
+  #This method is for preventing users to access Account Request & Login Page without logout
   def save_login_state
     if session[:user]
       redirect_to(:controller => 'gapp', :action => 'home')
@@ -22,6 +22,16 @@ class ApplicationController < ActionController::Base
     else
       return true
     end
+  end
+
+  ##Admin method to create new user
+  def adminCreateUser
+    if session[:user] == 'geevsAdmin'
+      return true
+    else
+      redirect_to(:controller => 'users', :action => 'accountRequest')
+      return false
+    end    
   end
 
 end

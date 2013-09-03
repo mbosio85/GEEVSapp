@@ -6,6 +6,21 @@ class User
     return con
   end
   
+  ## create a new account request
+  def self.handleAccountRequest(username,email)
+    ## create file
+    f = "AccountRequest/"+email+'_'+username+'.txt'
+    ## open file handler
+    file = File.open(f, 'w') 
+    ## write username and email
+    file.write(username+"\n")
+    file.write(email+"\n")
+    ## close file handler
+    file.close 
+    
+    return "success"
+  end
+  
   
   ## create new user
   def self.createSubmituser(username,email,pass)
