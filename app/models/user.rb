@@ -25,8 +25,17 @@ class User
       file.write("Local request timestamp :: " + Time.now().to_s() +"\n")      
       ## close file handler
       file.close 
+      ## only for production mode
+      if (Rails.env == "production")
+        ## create record of this ip in the database for one attemp
+        qry = "insert into Table_Req values('"+ ip+"','"+ 1.to_s() +"');"
+        conn = User.new.self
+        conn.query(qry)
+        conn.close
+      end
       return "success"      
     end
+        
   end
   
   
@@ -86,7 +95,6 @@ class User
   
   ## validate saved user for login
   def self.validateUser(login_username,login_password)
-  
     dbpass = ""
     dbsalt = ""
 
@@ -113,5 +121,21 @@ class User
       return "invaliduser"
     end            
   end
+  
+  
+  ## Account request attemp validation
+  def self.requestaccountattemptValidation(ip) 
+    attempt = ""
+    qry = "select R.* from Table_Req as R where R.ipaddress = '"+ ip +"';"
+    conn = User.new.self
+    res = conn.query(qry)
+    conn.close
+
+    res.each do |r1,r2|
+      attempt = r2
+    end
+
+    return attempt
+  end  
   
 end

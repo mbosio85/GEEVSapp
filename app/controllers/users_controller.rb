@@ -12,9 +12,18 @@ class UsersController < ApplicationController
   end
 
   def accountRequestHandler
+    ## get clinet ip address
     clientIp = request.remote_ip
     
-    #if(accReq[:clientIp] < 3) ## only 2 requests can be accepted from a single IP 
+    ## check user attemp by user ip address
+    valmsg = User.requestaccountattemptValidation(clientIp)
+    ## take action based on returned message
+    if valmsg == "1"
+      redirect_to :accountRequest
+      flash[:notice] = "You have already requested for an account ! GEEVS team will contact you soon !!"
+      flash[:color]= "invalid"
+      return       
+    else
     ## check signup parameter values
     if (params[:username] == "" or params[:email]=="" or params[:institute]=="")
       redirect_to :accountRequest
@@ -41,11 +50,8 @@ class UsersController < ApplicationController
       flash[:color]= "invalid"
       return      
     end
-    #else
-    #  redirect_to :accountRequest
-    #  flash[:notice] = "You have already requested for two accounts ! Sorry, no more requests !!"
-    #  flash[:color]= "invalid"            
-    #end
+  end
+
   end
 
   ## show request

@@ -9,8 +9,8 @@ role :web, "www.ediva.crg.eu"                          # Your HTTP server, Apach
 role :app, "www.ediva.crg.eu"                          # This may be the same as your `Web` server
 role :db,  "www.ediva.crg.eu", :primary => true        # This is where Rails migrations will run
 
-after "deploy", "deploy:bundle_gems"
-after "deploy:bundle_gems", "deploy:restart"
+#after "deploy", "deploy:bundle_gems"
+#after "deploy:bundle_gems", "deploy:restart"
 
 
 namespace :deploy do

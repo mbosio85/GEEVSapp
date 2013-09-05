@@ -8,7 +8,7 @@ gem 'capistrano'
 gem 'jquery-datatables-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 
-#gem 'therubyracer' ## only uncomment this in production
+gem 'therubyracer' ## only uncomment this in production
 
 
 # Gems used only for assets and not required
