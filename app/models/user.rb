@@ -7,7 +7,7 @@ class User
   end
   
   ## create a new account request
-  def self.handleAccountRequest(username,email,ip)
+  def self.handleAccountRequest(username,email,institute, ip)
     ## create file
     f = "AccountRequest/"+email+'_'+username+'.txt'
     
@@ -18,9 +18,11 @@ class User
       ## open file handler
       file = File.open(f, 'w') 
       ## write username and email
-      file.write(username+"\n")
-      file.write(email+"\n")
-      file.write(ip+"\n")
+      file.write("Username :: " + username+"\n")
+      file.write("User email :: " +  email+"\n")
+      file.write("User institute :: " + institute+"\n")
+      file.write("User IP address :: " + ip+"\n")
+      file.write("Local request timestamp :: " + Time.now().to_s() +"\n")      
       ## close file handler
       file.close 
       return "success"      

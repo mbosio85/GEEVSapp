@@ -1,0 +1,18 @@
+<div class = "Documentation">
+	<h3>Account requests listed below :</h3>
+	<ul>
+	<% Dir.foreach("AccountRequest") do |reqfile|-%>
+		<% next if reqfile == '.' or reqfile == '..' -%>
+		<li> <%= reqfile %> </li>
+		<div class = "submissionTutorial">
+		<p>	
+			<%File.open('AccountRequest/'+reqfile, "r") do |infile| -%>
+   				<% while (line = infile.gets) -%>
+        			<%= line %><br/>
+	    		<% end -%>
+			<% end -%>
+		</p>
+		</div>
+	<% end -%>	
+	</ul>
+</div>	

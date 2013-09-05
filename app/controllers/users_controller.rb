@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_filter :save_login_state, :only => [:accountRequest, :accountRequestHandler]
-  before_filter :adminCreateUser, :only => [:newUser, :create]
+  before_filter :adminCreateUser, :only => [:newUser, :create, :showRequest]
   
   ## SignUp form for new user
   def newUser
@@ -13,32 +13,45 @@ class UsersController < ApplicationController
 
   def accountRequestHandler
     clientIp = request.remote_ip
+    
+    #if(accReq[:clientIp] < 3) ## only 2 requests can be accepted from a single IP 
     ## check signup parameter values
-    if (params[:username] == "" or params[:email]=="")
+    if (params[:username] == "" or params[:email]=="" or params[:institute]=="")
       redirect_to :accountRequest
       flash[:notice] = "You should complete all the fields !"
       flash[:color]= "invalid"
+      return
     elsif ( params[:email] !~ /^[a-zA-Z0-9._%+-]+\@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/ ) ## initial check for valid email address format
       redirect_to :accountRequest
       flash[:notice] = "Not a valid email format ! Be sure to provide an email that you check frequently !!"
       flash[:color]= "invalid"
+      return
     else
-      msg = User.handleAccountRequest(params[:username],params[:email], clientIp)
+      msg = User.handleAccountRequest(params[:username],params[:email], params[:institute], clientIp)
     end      
     
     if msg == "success"
       redirect_to :accountRequest
       flash[:notice] = "Successfully account request submitted ! GEEVS team will contact you soon !!"
       flash[:color]= "valid"      
-    elsif msg == "fail"
+    #elsif msg == "fail"
+    else
       redirect_to :accountRequest
       flash[:notice] = "You have already requested for an account ! GEEVS team will contact you soon !!"
-      flash[:color]= "invalid"      
-    else
-      
+      flash[:color]= "invalid"
+      return      
     end
+    #else
+    #  redirect_to :accountRequest
+    #  flash[:notice] = "You have already requested for two accounts ! Sorry, no more requests !!"
+    #  flash[:color]= "invalid"            
+    #end
   end
 
+  ## show request
+  def showRequest
+    
+  end
 
   ## create new user
   def create
