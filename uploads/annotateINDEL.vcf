@@ -1,0 +1,112 @@
+#!/usr/bin/perl
+use warnings;
+use Digest::MD5 qw(md5);
+use DBI;
+
+## process command line parameters
+
+if (@ARGV != 1)
+{
+	print "\n\nUSAGE :: perl annotateINDEL.pl input_file_with_CNVs[VCF format]\n";
+	print "OUTPUT :: Complete annotation is written in a separate file with comma (,) separated values \n\n";
+	exit 0;
+}
+
+## DB parameters
+my $username = 'hana';
+my $database = 'eDiVa_innoDB';
+
+## separator 
+my $separator = ",";
+
+## open DB connection
+my $dbh = DBI->connect('dbi:mysql:'.$database.';host=localhost',$username,'') or die "Connection Error!!\n";
+
+## files to write data from eDiVa
+my $outFile = "$ARGV[0].annotated"; ## output file to write annotation with input CNV definitions
+unlink($outFile); ## delete the file if exists
+open (ANN, ">>".$outFile) or die "Cant open new file to write annotation !!\n";
+
+## open input file and process
+open (INPUT, $ARGV[0]) or die "cant open $ARGV[0] file !!\n";
+
+while(<INPUT>)
+{
+	chomp $_;
+	## replace the tab by comma
+	
+	if ($_ !~ m/^#/) ## skip header line
+	{
+		my @line = split(/\t/,$_);
+		
+		my $chr = $line[0];
+		my $position = $line[1];
+		my $ref = $line[3];
+		my $alt = $line[4];
+		#my $anns = "";
+		#my $ann = "";
+
+		## take care of chr1 or Chr1 and convert to chr1 /Chr1-> 1
+		#if ($chr =~ m/^c/ or $chr =~ m/^C/)
+		#{
+		#	$chr = substr($chr,3);
+		#}
+
+		if ($alt =~ m/\,/)
+		{
+			my @alts = split(/\,/,$alt);
+			foreach $al(@alts)
+			{
+				## make indelID
+				my $token_ref = unpack('L', md5($ref));
+				my $token_obs = unpack('L', md5($al));
+				my $indel = $chr.';'.$position.';'.$token_ref.';'.$token_obs;
+				
+				## annotate by eDiVa
+				## start processing
+				my $sql = "select annotateINDEL('$indel');";
+				my $stmt = $dbh->prepare($sql);
+				$stmt->execute or die "SQL Error!!\n";
+				
+				##process query result
+				while (@row = $stmt->fetchrow_array) 
+				{
+					#my $ann = $row[0];
+					#$anns = split(/\,/, $row[0]);
+					## write annotation to file 
+					print ANN $chr.$separator.$position.$separator.$ref.$separator.$al.$separator.$row[0]."\n";
+				}
+			}
+		}else{
+			## make indelID
+			my $token_ref = unpack('L', md5($ref));
+			my $token_obs = unpack('L', md5($alt));
+			my $indel = $chr.';'.$position.';'.$token_ref.';'.$token_obs;
+		
+			## annotate by eDiVa
+			## start processing
+			my $sql = "select annotateINDEL('$indel');";
+			my $stmt = $dbh->prepare($sql);
+			$stmt->execute or die "SQL Error!!\n";
+			
+			##process query result
+			while (@row = $stmt->fetchrow_array) 
+			{
+				#my $ann = $row[0];
+				#@anns = split(/\,/, $row[0]);
+				## write annotation to file 
+				print ANN $chr.$separator.$position.$separator.$ref.$separator.$alt.$separator.$row[0]."\n";
+			}
+		}
+
+	} ## end if
+} ## end while
+
+## close DB connection
+$dbh->disconnect();
+
+## close file connections
+close(ANN);
+close(INPUT);		
+
+print "Annotation Complete from eDiva !!\n";

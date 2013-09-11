@@ -310,6 +310,37 @@ class GappController < ApplicationController
   def submitdata
     @platform = ['Illumina','Solid']
   end
+  
+  ## Data submission handler
+  def handleSubmittedData
+    if (params[:checkTermsAndCondition] == "confirm")
+      if (params[:platform] == "" or params[:datauser] == "" or params[:email] == "" or params[:institute] == "" or params[:instituteUrl] == "")
+        redirect_to :action => "submitdata"
+        flash[:notice] = "You must complete all fields !"
+        flash[:color]= "invalid"
+        return
+      else
+        @msg = Datafile.handleUserDataSubmission(params[:platform],params[:datauser],params[:email],params[:institute],params[:instituteUrl],params[:logo],params[:varinatFile])
+        if @msg == "success"
+          redirect_to :action => "submitdata"
+          flash[:notice] = "Congratulations, you have successfully submitted data to GEEVS ! GEEVS team will contact you soon !!"
+          flash[:color]= "valid"
+          return
+        else
+          redirect_to :action => "submitdata"
+          flash[:notice] = "Something went wrong ! Contact the GEEVS team !!"
+          flash[:color]= "invalid"
+          return
+        end
+      end  
+   else
+    redirect_to :action => "submitdata"
+    flash[:notice] = "You must aggree to the terms and conditions of GEEVS !"
+    flash[:color]= "invalid"      
+    return
+   end      
+  end
+  
 
   ## documentation
   def documentation

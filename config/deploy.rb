@@ -15,7 +15,7 @@ role :db,  "www.ediva.crg.eu", :primary => true        # This is where Rails mig
 
 namespace :deploy do
    task :bundle_gems do
-     run "cd #{deploy_to}/current && bundle install"
+     run "cd #{deploy_to}/current && mkdir AccountRequest && mkdir uploads"
    end
    task :start do ; end
    task :stop do ; end

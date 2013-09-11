@@ -24,7 +24,7 @@
 		<td></td><td></td><td></td>	
 		<td>
 			<div class = "submitdata">
-  				<%= form_tag(:controller => '#', :action => '#',:multipart => true) do %>
+  				<%= form_tag( {:controller => 'gapp', :action => 'handleSubmittedData'},:multipart => true) do %>
   				<table align="center">
   				<tr>
   					<td>
@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<td>
-		    			<%= text_field_tag :email,nil,:placeholder => "email(s). For multiple names separate them by comma(,)", :class => "submitdataPanel" %>
+		    			<%= text_field_tag :email,nil,:placeholder => "email(s). For multiple emails separate them by comma(,)", :class => "submitdataPanel" %>
 		    		</td>
 				</tr>
 				<tr>    
@@ -59,16 +59,21 @@
 				<tr>
 					<td>
 						Logo of the organization: <%= file_field_tag 'logo'%>
-					<td>	
-				<tr>
+					</td>	
+				</tr
 				<tr>
 					<td>
 						Variant VCF File: <%= file_field_tag 'varinatFile'%>
-					<td>	
-				<tr>	
+					</td>	
+				</tr>
+				<tr>
+					<td>					
+						<%= check_box_tag 'checkTermsAndCondition', 'confirm' %> Plese check here to confirm that you have read and accepted the terms & conditions of GEEVS.
+					</td>	
+				</tr>	
+				<tr>
 					<td>	   
-      					<p><%= submit_tag "Submit data to Server" , disabled: true%></p>
-  						<p class = "alertPanel"> <b>Data submission is currently off. Sorry for the inconvenience. !!</b></p>
+      					<p><%= submit_tag "Submit data to GEEVS" %></p>
   					</td>
   				</tr>
   				</table>	
