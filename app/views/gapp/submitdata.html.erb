@@ -68,7 +68,8 @@
 				</tr>
 				<tr>
 					<td>					
-						<%= check_box_tag 'checkTermsAndCondition', 'confirm' %> Plese check here to confirm that you have read and accepted the terms & conditions of GEEVS.
+						<%= check_box_tag 'checkTermsAndCondition', 'confirm' %> Please check here to confirm that you have <b>read</b> and you <b>agree </b>
+						to the <%=  link_to_modal "Disclaimer & Confidentiality", "#disclaimerModal", :class=>"button" %> policies of GEEVS.
 					</td>	
 				</tr>	
 				<tr>
@@ -180,7 +181,26 @@
 
 
 
+<div id="disclaimerModal" class="demo-description" style="display: none; ">
 
+<h2>Disclaimer</h2>
+
+	<p>
+	The submitters are responsible to ensure that all data they submit to GEEVS fulfill all applicable legal and ethical requirements, and notably that the individuals 
+	from whom the data was extracted have signed a relevant consent form approving of the submission of their data in a pooled database.
+	</p>
+
+<h2>Confidentiality</h2>
+
+	<p>
+	GEEVS will only publish aggregate exome variant frequencies from a pool of data provided by the submitters. Each submission is composed of data from a minimum of 50 samples.
+	No personal data (age, sex, surname, country of origin, presence or absence of specific traits) will be available in GEEVS from any single individuals.
+	Data available for pooled data will be: country where the data was processed, and disease which has been studies. The GEEVS responsibles are aware of the literature 
+	concerning the identification of individuals from pooled genomic data, and of the ethical and legal regulations of privacy in genomics research (see bibliography below).
+	GEEVS responsibles will make all possible efforts to ensure that individuals will be non-identifiable to the greatest possible degree within GEEVS.
+	</p>
+
+</div>
 
 
 

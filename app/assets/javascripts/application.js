@@ -16,3 +16,5 @@
 //= require jquery
 //= require dataTables/jquery.dataTables
 //= require_tree .
+//= require jquery.ui.all
+//= require jquery.modal
