@@ -23,7 +23,7 @@
 	<h3>Data submissions listed below :</h3>
 	<ul>
 	<% Dir.foreach("uploads") do |reqfile|-%>
-		<% next if reqfile == '.' or reqfile == '..' or reqfile =~ /vcf$/ -%>
+		<% next if reqfile == '.' or reqfile == '..' or reqfile =~ /vcf/ or reqfile =~ /^\./ -%>
 		<li> <%= reqfile %> </li>
 		<div class = "submissionTutorial">
 		<p>	
