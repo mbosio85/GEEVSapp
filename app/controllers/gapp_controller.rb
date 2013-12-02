@@ -1,6 +1,6 @@
 class GappController < ApplicationController
 
-  before_filter :authenticate_user, :only => [:home, :search_chr_pos, :search_gene, :search, :submitdata, :documentation, :about, :contact]
+  before_filter :authenticate_user, :only => [:home, :search_chr_pos, :search_gene, :search, :submitdata, :documentation, :about, :contact, :downloads]
 
 
   ## home function
@@ -359,4 +359,14 @@ class GappController < ApplicationController
     
   end
  
+  def downloads
+    
+  end
+
+  def downloadsAction
+    fileToDownload = params[:dlfile]
+    send_file Rails.root.join('uploads',fileToDownload), :disposition => 'attachment'
+  end
+
+
 end

@@ -13,6 +13,7 @@ GEEVSapp::Application.routes.draw do
     match "stat", :to => 'gapp#stat'
     match "accountRequest", :to => 'users#accountRequest'
     match "showRequest", :to => 'users#showRequest'
+    match "downloads", :to => 'gapp#downloads'
 
   #match "login", :to => 'users#login'
   
