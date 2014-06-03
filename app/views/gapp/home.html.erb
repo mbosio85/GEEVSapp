@@ -13,10 +13,13 @@
            <b>Advanced Options</b>
            <br><br>
            Platform: <%= select_tag "chPlatform", options_for_select(@platform) %> &nbsp;
+           Variant type: <%= select_tag "chvartype", options_for_select(@vartype) %> &nbsp;
            Gene Definition: <%= select_tag "chGeneDef", options_for_select(@genedefinition) %>  &nbsp;
-           Exonic Function: <%= select_tag "chFunction",options_for_select(@exonicFunction)  %>  &nbsp;
            <br><br>
+           Exonic Function: <%= select_tag "chFunction",options_for_select(@exonicFunction)  %>  &nbsp; 
            Variant Function: <%= select_tag "varfunction",options_for_select(@variantFunction) %> &nbsp;
+           <br><br>
+           Subgroup: <%= select_tag "subgroup",options_for_select(@subgrp) %> &nbsp;           
            Allele Frequency: <%= text_field_tag :af ,nil, :class => 'sfieldOptionalaf', :placeholder => "e.g. >0.05" %>            
            <br><br>
        	   <% end %>
