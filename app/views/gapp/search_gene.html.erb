@@ -11,13 +11,16 @@
 		        <b>Gene</b>: <%= text_field_tag :gene, nil, :class => 'sfieldOptionalgene', :placeholder =>"e.g. ATM, ENSG00000187634" %>&nbsp;&nbsp;<%= submit_tag("Search")%> 
         		<br><br>
            		<b>Advanced Options</b>
+	           	<br><br>
+    	       	Platform: <%= select_tag "chPlatform", options_for_select(@platform) %> &nbsp;
+        	   	Variant type: <%= select_tag "chvartype", options_for_select(@vartype) %> &nbsp;
+           		Gene Definition: <%= select_tag "chGeneDef", options_for_select(@genedefinition) %>  &nbsp;
            		<br><br>
-           		Platform: <%= select_tag "chPlatform", "<option selected=\"selected\">Illumina</option><option>Solid</option>".html_safe %> &nbsp;
-           		Gene Definition: <%= select_tag "chGeneDef", "<option selected=\"selected\">Refseq</option><option>Ensembl</option><option>UCSC/Known</option>".html_safe %>  &nbsp;
-           		Exonic Function: <%= select_tag "chFunction", "<option selected=\"selected\">All</option><option>Exonic</option><option>Splicing</option><option>Intronic</option><option>UTR3</option><option>UTR5</option><option>Downstream</option><option>Upstream</option><option>Intergenic</option><option>ncRNA_exoic</option><option>ncRNA_splicing</option><option>ncRNA_intronic</option><option>ncRNA_UTR3</option><option>ncRNA_UTR5</option>".html_safe %>  &nbsp;
+           		Exonic Function: <%= select_tag "chFunction", options_for_select(@exonicFunction) %>  &nbsp;
+           		Variant Function: <%= select_tag "varfunction",options_for_select(@variantFunction) %>&nbsp;
            		<br><br>
-           		Variant Function: <%= select_tag "varfunction","<option selected=\"selected\">All</option><option>Nonsynonymous</option><option>Synonymous</option><option>Stopgain</option><option>Stoploss</option>".html_safe %>&nbsp;
-           		Allele Frequency: <%= text_field_tag :af ,nil, :class => 'sfieldOptionalaf', :placeholder => "e.g. >0.05" %>
+           		Subgroup: <%= select_tag "subgroup",options_for_select(@subgrp) %> &nbsp;           
+           		Allele Frequency: <%= text_field_tag :af ,nil, :class => 'sfieldOptionalaf',:placeholder => "e.g. >0.05" %>
            		<br><br>
            		<% end %>
 			</td>

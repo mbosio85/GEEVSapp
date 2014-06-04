@@ -19,7 +19,9 @@ class GappController < ApplicationController
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
-    @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']
+    @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
+    @vartype = ['SNP','INDEL']
+    @subgrp = ['All','spanish']
   end
   
   def search_chr_pos_show
@@ -27,39 +29,45 @@ class GappController < ApplicationController
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
-    @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']    
+    @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
+    @vartype = ['SNP','INDEL']
+    @subgrp = ['All','spanish']
      
     
     ## validation appropriate fields and then query the model
     if (params[:chromosome] == "")
-      #redirect_to :action => "search_chr_pos"
+        #redirect_to :action => "search_chr_pos"
         @res = []
-      @searchPanelChr = params[:chromosome] 
-      @searchPanelStartPos = params[:start_pos]
-      @searchPanelEndPos = params[:end_pos]
+        @searchPanelChr = params[:chromosome] 
+        @searchPanelStartPos = params[:start_pos]
+        @searchPanelEndPos = params[:end_pos]
         @searchPanelAF = params[:af]
         @searchPanelPlatform = params[:chPlatform]
         @searchPanelGeneDef = params[:chGeneDef]
         @searchPanelFunction = params[:chFunction]
         @seerchPanelVarFunction = params[:varfunction]
+        @searchPanelVartype = params[:chvartype]
+        @seerchPanelSubgroup = params[:subgroup]
 
-      flash[:notice] = "You must select a Chromosome !"
-      flash[:color]= "invalid"
+        flash[:notice] = "You must select a Chromosome !"
+        flash[:color]= "invalid"
     elsif (!(params[:start_pos] =~ /\d/) or !(params[:end_pos] =~ /\d/) or params[:end_pos].length > 11 or params[:start_pos].length > 11 or (params[:end_pos] < params[:start_pos]))
       #redirect_to :action => "search_chr_pos"
         @res = []
         @searchPanelChr = params[:chromosome] 
         @searchPanelStartPos = params[:start_pos]
         @searchPanelEndPos = params[:end_pos]
-
         @searchPanelAF = params[:af]
         @searchPanelPlatform = params[:chPlatform]
         @searchPanelGeneDef = params[:chGeneDef]
         @searchPanelFunction = params[:chFunction]
         @seerchPanelVarFunction = params[:varfunction]
+        @searchPanelVartype = params[:chvartype]
+        @seerchPanelSubgroup = params[:subgroup]
 
-      flash[:notice] = "Wrong Position Values !"
-      flash[:color]= "invalid"
+
+        flash[:notice] = "Wrong Position Values !"
+        flash[:color]= "invalid"
     elsif(!(params[:af] == "") and !(params[:af] =~ /^\<\>(\s)*[01\s]\.\d(\s)*\,(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\>(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\<(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\=(\s)*[01\s]\.\d/) and !(params[:af] =~ /^\!\=(\s)*[01\s]\.\d/))
       #redirect_to :action => "search_chr_pos"
         @res = []
@@ -71,9 +79,12 @@ class GappController < ApplicationController
         @searchPanelGeneDef = params[:chGeneDef]
         @searchPanelFunction = params[:chFunction]
         @seerchPanelVarFunction = params[:varfunction]
+        @searchPanelVartype = params[:chvartype]
+        @seerchPanelSubgroup = params[:subgroup]
 
-      flash[:notice] = "Wrong Allele Frequency format !"
-      flash[:color]= "invalid"
+
+        flash[:notice] = "Wrong Allele Frequency format !"
+        flash[:color]= "invalid"
     else
       #@res = Snp.searchChrPos(params[:chromosome],params[:start_pos],params[:end_pos],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:af])
       @searchPanelChr = params[:chromosome] 
@@ -84,8 +95,10 @@ class GappController < ApplicationController
       @searchPanelGeneDef = params[:chGeneDef]
       @searchPanelFunction = params[:chFunction]
       @seerchPanelVarFunction = params[:varfunction]
+      @searchPanelVartype = params[:chvartype]
+      @seerchPanelSubgroup = params[:subgroup]
 
-      (@res,rlen) = Snp.searchChrPos(params[:chromosome],params[:start_pos],params[:end_pos],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:varfunction],params[:af])
+      (@res,rlen) = Snp.searchChrPos(params[:chromosome],params[:start_pos],params[:end_pos],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:varfunction],params[:af],params[:chvartype],params[:subgroup])
       if rlen == 0
         #redirect_to :action => "search_chr_pos"
         flash[:notice] = "No variants in the database for your query search term and filters! Try different Chromosome, Positions and Filters !!"
@@ -100,14 +113,18 @@ class GappController < ApplicationController
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
-    @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']    
+    @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
+    @vartype = ['SNP','INDEL']
+    @subgrp = ['All','spanish']  
   end
   
   def search_gene_show
     @platform = ['Illumina','Solid']
     @genedefinition = [ 'Refseq','Ensembl','UCSC/Known']
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
-    @variantFunction = ['All','Nonsynonymous','Synonymous','Stopgain','Stoploss']
+    @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
+    @vartype = ['SNP','INDEL']
+    @subgrp = ['All','spanish']  
     
     ## validate search gene term
     if (params[:gene] == "")
@@ -125,6 +142,9 @@ class GappController < ApplicationController
       @searchPanelGeneDef = params[:chGeneDef]
       @searchPanelFunction = params[:chFunction]
       @seerchPanelVarFunction = params[:varfunction]
+      @searchPanelVartype = params[:chvartype]
+      @seerchPanelSubgroup =params[:subgroup]
+      
       flash[:notice] = "Wrong Gene name format !"
       flash[:color]= "invalid"
     elsif(params[:gene] =~ /^ENSG/ and params[:chGeneDef] != "Ensembl")
@@ -136,6 +156,8 @@ class GappController < ApplicationController
       @searchPanelGeneDef = params[:chGeneDef]
       @searchPanelFunction = params[:chFunction]
       @seerchPanelVarFunction = params[:varfunction]
+      @searchPanelVartype = params[:chvartype]
+      @seerchPanelSubgroup =params[:subgroup]
 
       flash[:notice] = "Please select \"Ensembl\" in Gene Definition field !"
       flash[:color]= "invalid"        
@@ -148,6 +170,8 @@ class GappController < ApplicationController
       @searchPanelGeneDef = params[:chGeneDef]
       @searchPanelFunction = params[:chFunction]
       @seerchPanelVarFunction = params[:varfunction]
+      @searchPanelVartype = params[:chvartype]
+      @seerchPanelSubgroup =params[:subgroup]      
 
       flash[:notice] = "Wrong Allele Frequency format !"
       flash[:color]= "invalid"
@@ -158,8 +182,10 @@ class GappController < ApplicationController
       @searchPanelGeneDef = params[:chGeneDef]
       @searchPanelFunction = params[:chFunction]
       @seerchPanelVarFunction = params[:varfunction]
+      @searchPanelVartype = params[:chvartype]
+      @seerchPanelSubgroup =params[:subgroup]
       
-      (@res,rlen) = Snp.searchGene(params[:gene],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:varfunction],params[:af])
+      (@res,rlen) = Snp.searchGene(params[:gene],params[:chPlatform],params[:chGeneDef],params[:chFunction],params[:varfunction],params[:af],params[:chvartype],params[:subgroup])
       if rlen == 0
         #redirect_to :action => "search_gene"
         flash[:notice] = "Either not a valid HGNC symbol/Ensembl gene indentifier or no variants in the database for your search term and filters ! Try different Genes and filters !!"
