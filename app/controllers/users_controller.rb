@@ -125,7 +125,7 @@ class UsersController < ApplicationController
   
   def logout     
     session[:user] = nil
-    redirect_to :accountRequest
+    redirect_to :home
   end
 
 end

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     if session[:user]
       return true
     else
-      redirect_to(:controller => 'users', :action => 'accountRequest')
+      redirect_to(:controller => 'gapp', :action => 'home')
       # set current_user by the current user object
       #@current_user = User.find session[:user] 
       return false
@@ -27,7 +27,6 @@ class ApplicationController < ActionController::Base
   ##Admin method to create new user
   def adminCreateUser
     admintIP = request.remote_ip
-    #if session[:user] == 'geevsAdmin' and admintIP == "127.0.0.1"
     if session[:user] == 'geevsAdmin'
       return true
     else

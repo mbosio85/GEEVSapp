@@ -1,7 +1,7 @@
 class GappController < ApplicationController
 
-  before_filter :authenticate_user, :only => [:home, :search_chr_pos, :search_gene, :search, :submitdata, :documentation, :about, :contact, :downloads]
-
+  #before_filter :authenticate_user, :only => [:home, :search_chr_pos, :search_gene, :search, :submitdata, :documentation, :about, :contact, :downloads]
+  before_filter :authenticate_user, :only => [:submitdata,:downloads]
 
   ## home function
   def home
