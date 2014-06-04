@@ -4,17 +4,15 @@ class Datafile
   end
   
     
-  def self.handleUserDataSubmission(platform, user, email, institute, insUrl, logo, userfile)
+  def self.handleUserDataSubmission(platform, user, email, institute, insUrl, logo, userfile,sampledcovfile)
     valMsg = "success" ## for validation response
       
     ## save the user uploaded files first
     self.uploadUserFile(userfile)
+    self.uploadUserFile(sampledcovfile)
     self.uploadUserLogo(logo)
     ## write information regarding this submission
-    self.writeUserInformation(platform, user, email, institute, insUrl)
-    
-    ## need to implement modules for uploading image
-    #self.uploadUserFile(logo)
+    self.writeUserInformation(platform, user, email, institute, insUrl,userfile.original_filename,sampledcovfile.original_filename)
     
     return valMsg
   end  
@@ -35,7 +33,7 @@ class Datafile
     return true
   end 
 
-  def self.writeUserInformation(platform, username, email, institute, insurl)
+  def self.writeUserInformation(platform, username, email, institute, insurl,filename,sampledcovfilename)
     ## open file handler
     File.open(Rails.root.join('uploads',institute), 'w') do |file|
       file.write("Username :: " + username+"\n")
@@ -43,6 +41,8 @@ class Datafile
       file.write("User institute :: " + institute+"\n")
       file.write("User institute Url :: " + insurl+"\n")
       file.write("Platform :: " + platform +"\n")
+      file.write("vcf file :: " + filename +"\n")
+      file.write("sample dcov file :: " + sampledcovfilename +"\n")
       file.write("Local request timestamp :: " + Time.now().to_s() +"\n")      
     end
     return true

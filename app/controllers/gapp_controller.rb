@@ -370,7 +370,7 @@ class GappController < ApplicationController
         flash[:color]= "invalid"
         return
       else
-        @msg = Datafile.handleUserDataSubmission(params[:platform],params[:datauser],params[:email],params[:institute],params[:instituteUrl],params[:logo],params[:varinatFile])
+        @msg = Datafile.handleUserDataSubmission(params[:platform],params[:datauser],params[:email],params[:institute],params[:instituteUrl],params[:logo],params[:varinatFile],params[:sample_dcov_File])
         if @msg == "success"
           redirect_to :action => "submitdata"
           flash[:notice] = "Congratulations, you have successfully submitted data to GEEVS ! GEEVS team will contact you soon !!"

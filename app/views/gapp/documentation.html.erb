@@ -3,8 +3,8 @@
 
 	<p>
 	Variants can be searched by providing appropriate chromosome, start and end position. These fields are mandatory. 
-	To limit search results filter criteria can optionally be modified, such as sequencing platform, allele frequency range, 
-	gene annotation and variant function. Our comparison has revealed substantial differences of SNP sets between sequencing platforms, 
+	To limit search results filter criteria can optionally be modified, such as sequencing platform, variant type, allele frequency range, 
+	gene annotation and variant function. You can also subselect variants based on subgroups (e.g. Spanish). Our comparison has revealed substantial differences of SNP sets between sequencing platforms, 
 	thus we suggest to select the same platform used in your study for comparative analysis. GEEVS currently provides gene annotations 
 	based on RefSeq, Ensembl or UCSC. The search can further be restricted to specific annotation features (e.g. exotic) or variant function 
 	(e.g. non synonymous SNV). The allele frequency filter is used to obtain a subset of SNVs with limited range of allele frequencies. Supported query formats for AF are:
@@ -57,6 +57,43 @@
 			<td>Observed allele in the sample</td>
 			</tr>
 			<tr>
+			<td>Allele Freq</td>
+			<td>Allele frequency in the GEUVADIS exome variant server</td>
+			</tr>
+			<tr>
+			<td>Allele Count</td>
+			<td>Alternate allele count in the GEUVADIS exome variant server</td>
+			</tr>
+			<tr>
+			<td>Allele Number</td>
+			<td>Total allele number in the GEUVADIS exome variant server</td>
+			</tr>
+			<tr>
+			<td>DP</td>
+			<td>Average Dp across samples in the GEUVADIS exome variant server</td>
+			</tr>
+			<tr>
+			<td>Gene</td>
+			<td>The gene the variant is hit</td>
+			</tr>
+			<tr>
+			<td>Transcript</td>
+			<td>The transcript of the gene that was hit by the variant</td>
+			</tr>
+			<tr>
+			<td>AAC</td>
+			<td>Amino acid change in the hit transcript. Format: AA1#position#AA2, which indicates that Amino Acid 1 was changed to Amino Acid 2 at that location 
+				by the variation</td>
+			</tr>
+			<tr>
+			<td>Variant Function</td>
+			<td>Coding region impact of the variation</td>
+			</tr>
+			<tr>
+			<td>Exonic Function</td>
+			<td>Transcript region hit by the variant</td>
+			</tr>
+			<tr>
 			<td>PhyloP(Pm,Pr,vt)</td>
 			<td>PhyloP conservation scores in the order of placental mammal, primates and vertebrates. You can find more about this <%= link_to :here , "http://genome.ucsc.edu/cgi-bin/hgTables", class: "nav_links_body" %>, at the conservation tracks.</td>
 			</tr>
@@ -85,12 +122,16 @@
 			<td>Condel score for the variation</td>
 			</tr>
 			<tr>
-			<td>dbSNP</td>
-			<td>dbSNP rs identifier (v.137)</td>
+			<td>Cadd1</td>
+			<td>Cadd score1</td>
 			</tr>
 			<tr>
-			<td>dbSNP_gmaf</td>
-			<td>Global minor allele frequency for the dbSNP rs identifier (v.137)</td>
+			<td>Cadd2</td>
+			<td>Cadd score2</td>
+			</tr>
+			<tr>
+			<td>dbSNP</td>
+			<td>dbSNP rs identifier (v.137)</td>
 			</tr>
 			<tr>
 			<td>AF(Eur:EVS,Afr:EVS,Tot:EVS)</td>
@@ -104,31 +145,6 @@
 			<tr>
 			<td>SegDup</td>
 			<td>Segmental Duplication score</td>
-			</tr>
-			<tr>
-			<td>Allele Freq</td>
-			<td>Allele frequency in the GEUVADIS exome variant server</td>
-			</tr>
-			<tr>
-			<td>Gene</td>
-			<td>The gene the variant is hit</td>
-			</tr>
-			<tr>
-			<td>Transcript</td>
-			<td>The transcript of the gene that was hit by the variant</td>
-			</tr>
-			<tr>
-			<td>AAC</td>
-			<td>Amino acid change in the hit transcript. Format: AA1#position#AA2, which indicates that Amino Acid 1 was changed to Amino Acid 2 at that location 
-				by the variation</td>
-			</tr>
-			<tr>
-			<td>Variant Function</td>
-			<td>Coding region impact of the variation</td>
-			</tr>
-			<tr>
-			<td>Exonic Function</td>
-			<td>Transcript region hit by the variant</td>
 			</tr>
 		</table>
 </div>

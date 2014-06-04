@@ -67,6 +67,11 @@
 					</td>	
 				</tr>
 				<tr>
+					<td>
+						Sample dcov File: <%= file_field_tag 'sample_dcov_File'%>
+					</td>	
+				</tr>
+				<tr>
 					<td>					
 						<%= check_box_tag 'checkTermsAndCondition', 'confirm' %> Please check here to confirm that you have <b>read</b> and you <b>agree </b>
 						to the <%=  link_to_modal "Disclaimer & Confidentiality", "#disclaimerModal", :class=>"button" %> policies of GEEVS.
@@ -89,6 +94,9 @@
 <h2>
 	Data Preparation Tutorial
 </h2>
+<h4>
+	<%= link_to "Download", :controller => 'gapp',:action => 'downloadsAction', :dlfile => Rails.root.join('downloads','geevs_user_pipeline.zip') %> the complete tutotial package
+</h4>
 	This tutorial gives a quick overview of GATK UnifiedGenotyper's multi-sample calling procedure from the 
 	<%= link_to "GATK-best practices","http://www.broadinstitute.org/gatk/guide/",target: "_blank", class: "nav_links_body" %> website. 
 	You can download GATK from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>. 
@@ -108,29 +116,88 @@
 
 	<li>Perform GATK multi-sample calling.</li>
 	<p>
-		BAMS=your_collection_bams.list<br>
-		CPU=number of CPU cores according to your computational system capabilities<br>
-		PROBE=your exome target enrichment probe file<br><br>
-		java -jar GenomeAnalysisTK.jar -R hg19.fasta -T UnifiedGenotyper -I $BAMS --num_threads $CPU -o multisampleInitialCall.vcf -A DepthPerAlleleBySample --intervals $PROBE<br>
+		GATK=path_to/GenomeAnalysisTK.jar<br>
+		REF=path_to/hg19.fasta<br>
+		BAMS=path_to/your_collection_bams.list<br>
+		OUTF=path_to/GEEVS_user_pipeline<br>
+		PROBE=path_to/enrichment_kit_probes_file.bed<br>
+		CPU=number_of_cpu_cores<br>
+
+		java -jar $GATK -R $REF -T UnifiedGenotyper -I $BAMS -nt $CPU -o multisampleInitialCall.vcf -A DepthPerAlleleBySample --intervals $PROBE -glm BOTH<br>
 	</p>
 
-	<li>Perform variant recalibration. (GEEVS is currently accepting SNPs only, therefore this step only shows you how to do variant recalibration for SNVs.)</li>
+	<li>Separate SNPs and INDELs from the initial call</li>
 	
 	<p>
-		GATKRS=path_to_your_GATK_bundle_resource<br><br> 
-		java -Xmx4g -jar GenomeAnalysisTK.jar -T VariantRecalibrator -R hg19.fasta -input multisampleInitialCall.vcf -recalFile multisampleInitialCall.vcf.recal 
-		-tranchesFile multisampleInitialCall.vcf.tranches   --maxGaussians 6 -resource:hapmap,known=false,training=true,truth=true,prior=15.0 $GATKRS/hapmap_3.3.hg19.vcf 
-		-resource:omni,known=false,training=true,truth=false,prior=12.0 $GATKRS/1000G_omni2.5.hg19.vcf -resource:dbsnp,known=true,training=false,truth=false,prior=6.0 
-		$GATKRS/dbsnp_137.hg19.vcf -an QD -an HaplotypeScore -an MQRankSum -an ReadPosRankSum -an FS -an MQ -an InbreedingCoeff -mode SNP
+		java -jar $GATK -R $REF -T SelectVariants --variant multisampleInitialCall.vcf -o multisampleInitialCall.snps.vcf -selectType SNP -L $PROBE<br>
+		java -jar $GATK -R $REF -T SelectVariants --variant multisampleInitialCall.vcf -o multisampleInitialCall.indels.vcf -selectType INDEL -L $PROBE<br>
+	</p>
+	
+	<li>Perform variant recalibration (SNPs only)</li>
+	
+	<p>
+		java -jar $GATK -T VariantRecalibrator -R $REF -input multisampleInitialCall.snps.vcf -recalFile multisampleInitialCall.snps.vcf.recal -tranchesFile multisampleInitialCall.snps.vcf.tranches   
+		-resource:hapmap,known=false,training=true,truth=true,prior=15.0 hapmap_3.3.hg19.vcf -resource:omni,known=false,training=true,truth=false,prior=12.0 1000G_omni2.5.hg19.vcf 
+		-resource:dbsnp,known=true,training=false,truth=false,prior=2.0 dbsnp_138.hg19.vcf -resource:1000G,known=false,training=true,truth=false,prior=10.0 1000G_phase1.snps.high_confidence.hg19.vcf 
+		-an QD -an MQRankSum -an ReadPosRankSum -an FS  -mode SNP -tranche 100.0 -tranche 99.9 -tranche 99.0 -tranche 90.0 -rscriptFile recalibrate_SNP_plots.R --target_titv 3.0 -L $PROBE<br>
 	</p>
 
-	<li>Finally apply the recalibration to the initial calls.</li>
-	
+	<li>Apply recalibration (SNPs only)</li>	
 	<p>
-		java -Xmx4g -jar GenomeAnalysisTK.jar -T ApplyRecalibration -R hg19.fasta -input multisampleInitialCall.vcf -tranchesFile multisampleInitialCall.vcf.tranches 
-		-recalFile multisampleInitialCall.vcf.recal -o multisampleInitialCall.recalibrated.filtered.vcf --ts_filter_level 99.0 -mode SNP
+		java -jar $GATK -T ApplyRecalibration -R $REF -input multisampleInitialCall.snps.vcf -tranchesFile multisampleInitialCall.snps.vcf.tranches -recalFile multisampleInitialCall.snps.vcf.recal 
+		-o multisampleInitialCall.snps.recalibrated.filtered.vcf --ts_filter_level 99.9 -mode SNP -L $PROBE<br>	
 	</p>	
 
+	<li>Get passed SNPs from the recalibration vcf and perform variant Evaluation</li>	
+	<p>
+		egrep 'PASS|^#' multisampleInitialCall.snps.recalibrated.filtered.vcf > multisampleInitialCall.snps.recalibrated.filtered.clean.vcf <br>
+		java -jar $GATK -T VariantEval -R $REF --dbsnp dbsnp_138.hg19.vcf -o report.multisampleInitialCall.snps.recalibrated.filtered.clean.vcf 
+		--eval multisampleInitialCall.snps.recalibrated.filtered.clean.vcf -l INFO --downsampling_type NONE<br>
+	</p>	
+
+	<li>Perform variant recalibration (INDELs only)</li>	
+	<p>
+		java -jar $GATK -T VariantRecalibrator -R $REF -input multisampleInitialCall.indels.vcf -recalFile multisampleInitialCall.indels.vcf.recal -tranchesFile multisampleInitialCall.indels.vcf.tranches  
+		--maxGaussians 4 -resource:mills,known=true,training=true,truth=true,prior=12.0 Mills_and_1000G_gold_standard.indels.hg19.vcf -an FS -an ReadPosRankSum -an MQRankSum -tranche 100.0 -tranche 99.9 
+		-tranche 99.0 -tranche 90.0 -mode INDEL -rscriptFile recalibrate_INDEL_plots.R -L $PROBE<br>
+	</p>
+
+	<li>Apply recalibration (INDELs only)</li>	
+	<p>
+		java -jar $GATK -T ApplyRecalibration -R $REF -input multisampleInitialCall.indels.vcf -tranchesFile multisampleInitialCall.indels.vcf.tranches -recalFile multisampleInitialCall.indels.vcf.recal 
+		-o multisampleInitialCall.indels.recalibrated.filtered.vcf --ts_filter_level 99.9 -mode INDEL -L $PROBE<br>	
+	</p>	
+
+	<li>Get passed INDELs from the recalibration vcf and perform variant Evaluation</li>	
+	<p>
+		egrep 'PASS|^#' multisampleInitialCall.indels.recalibrated.filtered.vcf > multisampleInitialCall.indels.recalibrated.filtered.clean.vcf <br>
+		java -jar $GATK -T VariantEval -R $REF --dbsnp dbsnp_138.hg19.vcf -o report.multisampleInitialCall.indels.recalibrated.filtered.clean.vcf 
+		--eval multisampleInitialCall.indels.recalibrated.filtered.clean.vcf -l INFO --downsampling_type NONE<br>
+	</p>	
+
+	<li>Convert your vcf(s) files to geevs format</li>	
+	<p>
+		perl $OUTF/bin/convert_to_geevs_format.pl vcf_files.txt<br>
+		perl $OUTF/bin/prepare_geevs_vcf.pl multisampleInitialCall.snps.recalibrated.filtered.clean.vcf.converted $OUTF/header/vcfheader.txt geevs_variants_to_submit.vcf<br>
+		perl $OUTF/bin/prepare_geevs_vcf.pl multisampleInitialCall.indels.recalibrated.filtered.clean.vcf.converted $OUTF/header/vcfheader.txt geevs_indel_variants_to_submit.vcf<br>
+	</p>	
+
+	<li>Force call variants on each position of geevs region file</li>	
+	<p>
+		java -jar $GATK -R $REF -T UnifiedGenotyper -nt $CPU -I $BAMS -o geevs_locus.vcf -L geevs_locus.gatk.bed --output_mode EMIT_ALL_SITES<br>	
+	</p>	
+
+	<li>Prepare transformed sample depth of coverage file to upload</li>	
+	<p>
+		perl $OUTF/bin/prepare_sample_dcov_file.pl geevs_locus.vcf<br>	
+	</p>	
+
+	<li>Data upload to GEEVS</li>	
+	<p>
+		At this point, you have separate VCFs for SNPs and INDELs along with a transformed sample depth of coverage file. Separate upload for separate VCF file is desired.<br>	
+	</p>	
+
+	
 </ul>
 </div>
 
@@ -146,7 +213,22 @@
 <ul>
 	<li> VCF file HEADER</li>
 
-	<p>		
+	<p>
+##fileformat=VCFv4.1<br>
+##fileDate=<><br>
+##SampleSize=<><br>
+##Population=<> (e.g. Spanish)<br>
+##Phenotype=<> (e.g. phenotype X) <br>
+##Enrichment=<> (e.g. SureSelect Human All Exon V1,V3,V4,V4+UUTRs,SeqCap EZ Exome V3 and so on)<br>
+##Sequencer=<> (e.g. HiSeq2000)<br>
+##SeqVersion=<> (e.g. TrueSeq PE Cluster Generation Kit v3, SBS Sequencing Kit v3)<br>
+##ReferenceSeq=hg19<br>
+##Run=<> (e.g. 100bp paired-end)<br>
+##Analysis=<> (e.g. Alignment=BWA v0.7,VariantCalling=GATK v3.1,CallingType=multi-sample calling)<br>
+##Center=<> (e.g. Center for Genomic Regulation - CRG (Barcelona))<br>
+##Contact=<> (e.g. Stephan Ossowski(Stephan.Ossowski@crg.eu))<br>
+		
+<!--						
 ##fileformat=VCFv4.1<br>
 ##fileDate=20130308<br>
 ##SampleSize=100<br>
@@ -161,6 +243,7 @@
 ##Run=100bp paired-end<br>
 ##ReferenceSeq=hg19<br>
 <%=  "##Analysis=<Alignment=bwa v0.7.5a,VariantCalling=GenomeAnalysisTK v 2.6-5 + samtools mpileup + shore, CallingType = Multi-sample>" %><br>
+-->
 	</p>
 
 	<li>VCF mandatory INFO tags</li>
@@ -169,7 +252,7 @@
 <%= "##INFO=<ID=AC,Number=A,Type=Integer,Description=\"Allele count in genotypes, in the order of ALT allele listed\">" %><br>
 <%= "##INFO=<ID=AF,Number=A,Type=Float,Description=\"Allele Frequency, for each ALT allele, in the same order as listed\">" %><br>
 <%= "##INFO=<ID=AN,Number=1,Type=Integer,Description=\"Total number of alleles in called genotypes\">" %><br>
-<%= "##INFO=<ID=GTS,Number=3,Type=String,Description=\"Observed Genotypes in the order of RR,RA,AA where R=REF allele and A=ALT allele. For INDELs, A1, A2, or An refers to the N-th alternate allele while R refers to the reference allele\">" %> <br>
+<%= "##INFO=<ID=GTS,Number=3,Type=String,Description=\"Observed Genotypes in the order of AA,AR,RR where R=REF allele and A=ALT allele. For INDELs, A1, A2, or An refers to the N-th alternate allele while R refers to the reference allele\">" %> <br>
 <%= "##INFO=<ID=GTC,Number=3,Type=Integer,Description=\"Genotype Counts in the order of GTS list\">" %><br>
 <%= "##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Approximate average read depth floored to the nearest Integer(reads with MQ=255 or with bad mates are filtered)\">" %><br>
 </p>	
@@ -204,25 +287,3 @@
 		See bibliography <%= link_to :"here", 'about', target: "_blank" %>.
 	</p>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
