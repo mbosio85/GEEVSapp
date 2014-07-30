@@ -129,8 +129,14 @@
 	<li>Separate SNPs and INDELs from the initial call</li>
 	
 	<p>
-		java -jar $GATK -R $REF -T SelectVariants --variant multisampleInitialCall.vcf -o multisampleInitialCall.snps.vcf -selectType SNP -L $PROBE<br>
+		java -jar $GATK -R $REF -T SelectVariants --variant multisampleInitialCall.vcf -o multisampleInitialCall.raw.snps.vcf -selectType SNP -L $PROBE<br>
 		java -jar $GATK -R $REF -T SelectVariants --variant multisampleInitialCall.vcf -o multisampleInitialCall.indels.vcf -selectType INDEL -L $PROBE<br>
+	</p>
+	
+	<li>Perform pre variant recalibration VQRS filtering (SNPs only)</li>
+
+	<p>
+		perl $OUTF/bin/pre_vqrs_filter.pl --infile multisampleInitialCall.raw.snps.vcf --outfile multisampleInitialCall.snps.vcf
 	</p>
 	
 	<li>Perform variant recalibration (SNPs only)</li>
