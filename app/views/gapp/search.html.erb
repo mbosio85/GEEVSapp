@@ -1,0 +1,193 @@
+<div class= "SearchPanel">
+	<h3></h3>
+       <table align="center">	
+       	<tr>
+       	   <td>
+       	   <%= form_tag(:controller => 'gapp',:action => 'search') do %>
+           Search: <%= text_field_tag :searchTerm, @searchPanelTerm, :class => 'sfieldPanelSearchBox' %> &nbsp;
+           <!--Platform: <%= select_tag "chPlatform", options_for_select(@platform,@searchPanelPlatform) %> &nbsp;-->
+           Variant type: <%= select_tag "chvartype", options_for_select(@vartype,@searchPanelVartype) %> &nbsp;
+           Gene definition: <%= select_tag "chGeneDef", options_for_select(@genedefinition, @searchPanelGeneDef) %>  &nbsp;
+           Exonic function: <%= select_tag "chFunction", options_for_select(@exonicFunction, @searchPanelFunction)  %>  &nbsp;
+           Variant function: <%= select_tag "varfunction",options_for_select(@variantFunction, @seerchPanelVarFunction)%> &nbsp;
+           Subgroup: <%= select_tag "subgroup",options_for_select(@subgrp,@seerchPanelSubgroup) %> &nbsp;
+           Allele frequency: <%= text_field_tag :af ,@searchPanelAF, :class => 'sfieldPanel' %>&nbsp;
+       	   <%= submit_tag("Search/Filter") %>
+       	   <% end %>
+       	   </td>
+       	</tr>	
+       </table>
+</div>
+    
+<h2 align="center">Showing Results for <%= @searchPanelTerm %></h2>
+<div class="search_res">
+	<table id="variants">
+		<thead>
+		<tr>
+			<th><span title="Chromosome">Chr</span></th>
+			<th><span title="Position (1-based coordinate)">Position</span></th>
+			<th><span title="Reference allele">Reference</span></th>
+			<th><span title="Alteration/Observed allele">Alteration</span></th>
+			<th><span title="Allele frequency in GEEVS">Allele Freq</span></th>
+			<th><span title="Allele count in GEEVS">Allele Count</span></th>
+			<th><span title="Allele number in GEEVS">Allele Number</span></th>
+			<th><span title="Avg Dp across samples in GEEVS">DP</span></th>
+			<th><span title="The gene hit by the variant">Gene</span></th>
+			<th><span title="The transcript hit by the variant">Transcript</span></th>
+			<th><span title="Amino acid change">AAC</span></th>
+			<th><span title="Coding region impact of the variant">Variant Function</span></th>
+			<th><span title="Transcript region hit by the variant">Exonic Function</span></th>
+			<th><span title="PhyloP conservation score of placental mammal">PhyloP(Pm)</span></th>
+			<th><span title="PhyloP conservation score of primates">PhyloP(Pr)</span></th>
+			<th><span title="PhyloP conservation score of vertebrates">PhyloP(vt)</span></th>
+			<th><span title="PhastCons conservation score of placental mammal">PhastCons(Pm)<span></th>
+			<th><span title="PhastCons conservation score of primates">PhastCons(Pr)</span></th>
+			<th><span title="PhastCons conservation score of vertebrates">PhastCons(vt)</span></th>
+			<th><span title="GERP++ conservation score 1">GERP++(s1)</span></th>
+			<th><span title="GERP++ conservation score 2">GERP++(s2)</span></th>
+			<th><span title="SIFT score of the variant">SIFT</span></th>
+			<th><span title="Polyphen2 score of the variant">Pph2</span></th>
+			<th><span title="Mutationassessor score of the variant">MutAss</span></th>
+			<th><span title="Condel score of the variant">Condel</span></th>
+			<th><span title="Cadd score1">Cadd1</span></th>
+			<th><span title="Cadd score2">Cadd2</span></th>
+			<th><span title="dbSNP rs identifier">dbSNP</span></th>
+			<th><span title="Allele frequency of the European dataset in Washington Exome Variant Server">AF(Eur:EVS)</span></th>
+			<th><span title="Allele frequency of the African dataset in Washington Exome Variant Server">AF(Afr:EVS)</span></th>
+			<th><span title="Allele frequency of the Total dataset in Washington Exome Variant Server">AF(Tot:EVS)</th>
+			<th><span title="Allele frequency of the European dataset in 1000Genomes">AF(Eur:1000G)</span></th>
+			<th><span title="Allele frequency of the African dataset in 1000Genomes">AF(Afr:1000G)</span></th>
+			<th><span title="Allele frequency of the American dataset in 1000Genomes">AF(Amr:1000G)</span></th>
+			<th><span title="Allele frequency of the Asian dataset in 1000Genomes">AF(Asia:1000G)</span></th>
+			<th><span title="Allele frequency of the Total dataset in 1000Genomes">AF(Tot:1000G)</span></th>
+			<th><span title="Segmental duplication score">SegDup</span></th>
+		</tr>
+		</thead>
+		<% if (@searchPanelPlatform == 'Illumina')-%>
+		<tbody>
+		<% @res.each do |r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r30,r31,r32,r33,r34,r35,r36,r37,r38,r39,r40,r41,r42,r43,r44,r45,r46,r47,r48,r49,r50,r51,r52,r53,r54,r55| -%>
+		<tr>
+			<td><%= r2 %></td> 
+			<td><%= r3 %></td>
+			<td><%= r4 %></td>
+			<td><%= r5 %></td>
+			<% if (@seerchPanelSubgroup == "All")-%>
+			<td><%= r32 %></td>
+			<td><%= r33 %></td>
+			<td><%= r34 %></td>
+			<td><%= r35 %></td>
+			<% else -%>
+			<td><%= r48 %></td>
+			<td><%= r49 %></td>
+			<td><%= r50 %></td>
+			<td><%= r51 %></td>
+			<% end -%>
+			<td><%= r41 %></td>
+			<% if (r42.nil?) -%>
+			<td><%= r42 %></td>
+			<% elsif (r42 =~ /^NM/ or r42 =~ /^NR/) -%>
+			<td><%= link_to(r42, "http://www.ncbi.nlm.nih.gov/nuccore/"+r42, target: "_blank") %></td>
+			<% elsif (r42 =~ /^uc/) -%>
+			<td><%= link_to(r42, "http://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene="+r42, target: "_blank") %></td>
+			<% elsif (r42 =~ /^ENST/) -%>
+			<td><%= link_to(r42, "http://www.ensembl.org/Homo_sapiens/Transcript/Summary?t="+r42, target: "_blank") %></td>
+			<% else -%>
+			<td><%= r42 %></td>
+			<% end -%>
+			<td><%= r43 %></td>
+			<td><%= r44 %></td>
+			<td><%= r45 %></td>
+			<td><%= r8 %></td>
+			<td><%= r9 %></td>
+			<td><%= r10 %></td>
+			<td><%= r11 %></td>
+			<td><%= r12 %></td>
+			<td><%= r13 %></td>
+			<td><%= r14 %></td>
+			<td><%= r15 %></td>
+			<td><%= r16 %></td>
+			<td><%= r17 %></td>
+			<td><%= r18 %></td>
+			<td><%= r19 %></td>
+			<td><%= r20 %></td>
+			<td><%= r21 %></td>			
+			<% if (r22.nil?) -%>
+			<td><%= r22 %></td>
+			<% elsif (r22 =~ /^rs/) -%>
+			<td><%= link_to(r22, "http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?type=rs&rs="+r22, target: "_blank") %></td>
+			<% else -%>
+			<td><%= r22 %></td>
+			<% end -%>
+			<td><%= r23 %></td>
+			<td><%= r24 %></td>
+			<td><%= r25 %></td>
+			<td><%= r26 %></td>
+			<td><%= r27 %></td>
+			<td><%= r28 %></td>
+			<td><%= r29 %></td>
+			<td><%= r30 %></td>
+			<td><%= r31 %></td>	
+		</tr>
+		<% end -%>
+		</tbody>
+		<% else -%>
+		<tbody>
+		<% @res.each do |r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r30,r31,r32,r33,r34,r35,r36,r37,r38,r39,r40,r41,r42| -%>
+		<tr>
+			<td><%= r2 %></td> 
+			<td><%= r3 %></td>
+			<td><%= r4 %></td>
+			<td><%= r5 %></td>
+			<td><%= r34 %></td>
+			<td><%= r35 %></td>
+			<td><%= r36 %></td>
+			<td><%= r38 %></td>
+			<% if (r39.nil?) -%>
+			<td><%= r39 %></td>
+			<% elsif (r39 =~ /^NM/ or r39 =~ /^NR/) -%>
+			<td><%= link_to(r39, "http://www.ncbi.nlm.nih.gov/nuccore/"+r39, target: "_blank") %></td>
+			<% elsif (r39 =~ /^uc/) -%>
+			<td><%= link_to(r39, "http://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene="+r39, target: "_blank") %></td>
+			<% elsif (r39 =~ /^ENST/) -%>
+			<td><%= link_to(r39, "http://www.ensembl.org/Homo_sapiens/Transcript/Summary?t="+r39, target: "_blank") %></td>
+			<% else -%>
+			<td><%= r39 %></td>
+			<% end -%>
+			<td><%= r40 %></td>
+			<td><%= r41 %></td>
+			<td><%= r42 %></td>
+			<td><%= r8 %></td>
+			<td><%= r9 %></td>
+			<td><%= r10 %></td>
+			<td><%= r11 %></td>
+			<td><%= r12 %></td>
+			<td><%= r13 %></td>
+			<td><%= r14 %></td>
+			<td><%= r15 %></td>
+			<td><%= r16 %></td>
+			<td><%= r17 %></td>
+			<td><%= r18 %></td>
+			<td><%= r19 %></td>
+			<% if (r20.nil?) -%>
+			<td><%= r20 %></td>
+			<% elsif (r20 =~ /^rs/) -%>
+			<td><%= link_to(r20, "http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?type=rs&rs="+r20, target: "_blank") %></td>
+			<% else -%>
+			<td><%= r20 %></td>
+			<% end -%>
+			<td><%= r21 %></td>
+			<td><%= r22 %></td>
+			<td><%= r23 %></td>
+			<td><%= r24 %></td>
+			<td><%= r25 %></td>
+			<td><%= r26 %></td>
+			<td><%= r27 %></td>
+			<td><%= r28 %></td>
+			<td><%= r29 %></td>
+			<td><%= r30 %></td>						
+		</tr>
+		<% end -%>
+		</tbody>
+		<% end -%>
+	</table>
+</div>

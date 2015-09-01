@@ -1,0 +1,52 @@
+<div class = "Documentation">
+<h2>GEEVS Data Analysis	(Beta Version)</h2>
+
+	<p>
+	Aggregation of variant frequencies from multiple studies has been done separately for Illumina and Solid platform based calls.
+	Illumina based SNV calls have been produced by GATK UnifiedGenotyper's multi-sample calling, separately for each study of at least 50 cases.
+	Resulting VCF files need to fulfill various filter criteria to be considered for aggregation, e.g. percent recall in dbSNP, 
+	TiTv ratio as well as high correlation to 1000genomes and EVS. Furthermore all reported variants are filtered in the following manner:	
+	</br>
+	</p>
+	<ul>
+      	<li> Only variants located in the corresponding exome enrichment kit from each site were considered.</li>
+      	<li> Only chromosome 1-22, X and Y were considered.</li>
+	</ul>
+	<p>Some aggregation statistics are given below.</p>
+</div>
+
+<div class = "Documentation">
+<h2>Percentage of known for SNVs and INDELs (dbSNP v.138)</h2>
+	<table>
+		<tr><td>
+		<%= image_tag('gatk_report_known.png')%>
+		</td></tr>
+	</table>
+</div>
+
+<div class = "Documentation">
+<h2>Transition/Transversion (TiTv) ratio for SNVs</h2>
+	<table>
+		<tr><td>
+		<%= image_tag('gatk_report.titv.png')%>
+		</td></tr>
+	</table>
+</div>
+
+<div class = "Documentation">
+<h2>SNV allele frequency correlation of GEEVS vs. Exome Variant Server (EVS) and GEEVS vs. 1000 Genomes</h2>
+	<table>
+		<tr><td>
+		<%= image_tag('qc_maf_plots_snps.png')%>
+		</td></tr>		
+	</table>
+</div>
+
+<div class = "Documentation">
+<h2>INDEL allele frequency correlation of GEEVS vs. Exome Variant Server (EVS) and GEEVS vs. 1000 Genomes</h2>
+	<table>
+		<tr><td>
+		<%= image_tag('qc_maf_plots_indels.png')%>
+		</td></tr>		
+	</table>
+</div>

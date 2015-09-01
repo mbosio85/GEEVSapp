@@ -1,0 +1,32 @@
+<table align="center">
+<tr>
+<td>		
+	<div class = "Search">
+  	<%= form_tag(:controller => 'users', :action => 'authenticateUser') do %>
+  	<table align="center">
+  		<tr>
+  			<th>
+  			  <b>Login for Data Submission</b>		
+  			</th>
+  		</tr>
+  		<tr>
+ 			<td>
+ 		    Username:</br> <%= text_field_tag :login_username, nil,:class => "signupPanel"%>			 
+			</td>
+		</tr>
+		<tr>
+			<td>
+		    Password:</br> <%= password_field_tag :login_password, nil,:class => "signupPanel" %>
+		    </td>
+		</tr>
+		<tr>
+			<th>
+      		<%= submit_tag "Login" %>
+  			</th>
+  		</tr>
+  	</table>	
+  	<% end %>
+	</div>
+</td>
+</tr>
+</table>

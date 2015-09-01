@@ -1,0 +1,303 @@
+/*
+ *= require_self
+ *= require dataTables/jquery.dataTables
+ *= require_tree . 
+ *= require jquery.ui.all
+ *= require jquery.modal
+*/
+
+body{
+		font-family: Verdana,Helvetica,Geneva;
+       	font-size: small;
+       	background-color:#F0F0F0;
+}
+.Banner{
+        height:130px;
+		position:fixed;
+		top:0;
+		right:0;
+		left:0;
+        background-color:#000000;
+        padding-top:5px;
+	    /*background-image: url('geuLogoLeft.png');
+	    background-repeat:no-repeat;*/
+}
+
+.lognav_banner{
+		width:100%;
+		top:130px;
+		right:0;
+		left:0;
+		position:fixed;
+		list-style-type: none;
+        background-color: #000000;
+}
+.lognav_banner p{
+		color:#FFFFFF;
+}
+.nav_banner{
+		height:40px;
+		width:100%;
+		top:145px;
+		right:0;
+		left:0;
+		position:fixed;
+        background-color: #000000;
+		/*background-image: url('nav_banner.png');
+		background-repeat: repeat;
+		border-bottom-style: none;*/
+}
+.container{
+		margin-top:180px;
+		right:0;
+		left:0;
+		margin-bottom:70px;
+		position: static;
+		min-height:700px;
+		min-width: 1400px;
+}
+.datapartnerPanel{
+		position: fixed;
+		padding:5px;
+		bottom: 50px;
+		right:0;
+		left:0;
+        background-color:#F0F0F0;
+}
+.datapartnerPanel table {
+		width: 800px;
+}
+.geuvadisconsortiumPanel{
+		position: fixed;
+		padding:5px;
+		bottom: 50px;
+		right:0;
+		left:0;
+        background-color:#F0F0F0;
+}
+.geuvadisconsortiumPanel table {
+		width: 400px;
+}
+.lognav_links{
+		font:smaller;        
+        color: #CCFFCC;
+       	text-decoration: none;
+}
+.nav{
+        list-style-type: none;
+        text-align: center;
+        color: #FFFFFF;
+}
+.nav li{
+        display: inline;
+        margin-right:10px;
+}
+.nav_links {
+        color: #FFFFFF;
+        text-decoration: none;
+}
+.nav_links:hover {
+        color: #888888;
+        text-decoration: none;
+} 
+.nav_links_body{
+        color: blue;
+        text-decoration: none;
+}
+.Search {
+		margin:auto;
+        width:700px;
+        background-color:#E8E8E8;
+        border-radius: 5px 5px 5px 5px;
+        padding: 10px;
+}
+.Search p{
+		text-align: justify;
+}
+.Search h3{
+	    text-align: center;
+}
+.Search table td{
+		color: #000000;
+		padding: 5px;
+}
+.SearchPanel{
+		right:0;
+		left:0;
+        background-color:#E8E8E8;
+        border-radius: 5px 5px 5px 5px;
+}
+.Documentation {
+       	background-color:#F0F0F0;
+        margin:auto;
+        width:1200px;
+        /*border-bottom: 2px solid;*/
+        padding: 10px;
+}
+.Documentation h2{
+		text-decoration: none;
+}
+.Documentation p{
+		text-align: justify;
+}
+.Documentation table{
+        text-align: left;
+        margin: auto;
+}
+.search_res{
+		height: inherit;
+}
+.search_res table tr{
+        text-align: center;
+        margin: auto;
+        border: 2px solid #FF0000;
+        background-color: rgba(0, 0, 0, .2);
+        box-shadow: 5px 5px 5px #888888;
+}
+.search_res table{
+		font-size: smaller;
+        text-align: center;
+        margin:auto;
+        margin-top:1px;
+        box-shadow: 5px 5px 5px #888888;
+}
+.search_res table th td{
+        padding: 6px 16px 6px 6px;
+}
+.footer{
+		color: #FFFFFF;
+		height:60px;
+		padding:5px;
+		font-size: smaller;
+		position: fixed;
+		bottom: 0px;
+		right:0;
+		left:0;
+		position:fixed;
+        background-color:#000000;
+}
+.footer li{
+        display: inline;
+}
+.notice, .valid_notice, .invalid_notice{
+		height: auto; 
+		width: auto ;
+		margin-top:5px;
+}
+.notice, .invalid_notice p, .valid_notice p{
+		text-align:center;
+		margin-top:6px;
+}
+
+.notice{
+		background-color: transparent;
+}
+
+.invalid_notice{
+		background-color: #FFCCCC;
+		border:1px solid red;
+}
+.valid_notice{
+		background-color: #CCFFCC;
+		border:1px solid green;
+}
+.sfield{
+		width: 550px;
+		height: 25px;
+		border-radius: 5px 5px 5px 5px;
+}
+.sfieldOptional{
+		width: 130px;
+		border-radius: 5px 5px 5px 5px;
+}
+.sfieldOptionalaf{
+		width: 245px;
+		border-radius: 5px 5px 5px 5px;
+}
+.sfieldOptionalgene{
+		width: 510px;
+		border-radius: 5px 5px 5px 5px;	
+}
+.sfieldPanelSearchBox{
+		width: 200px;
+		border-radius: 5px 5px 5px 5px;	
+}
+.sfieldPanel{
+		width: 80px;
+		border-radius: 5px 5px 5px 5px;	
+}
+.logfieldPanel{
+		width: 150px;
+		border-radius: 3px 3px 3px 3px;	
+}
+.signupPanel{
+		width: 300px;
+		height: 25px;
+		border-radius: 5px 5px 5px 5px;
+}
+.submission{
+       	background-color:#F0F0F0;
+        margin:auto;
+        width:1200px;
+        padding: 5px;
+        text-align:justify;	
+}
+.submitdata{
+		margin:auto;
+        width:500px;
+        background-color:#E8E8E8;
+        text-align: left;
+        border-radius: 5px 5px 5px 5px;
+        padding: 20px;
+}
+.submitdata p{
+        text-align: center;
+}
+.submitdata table td{
+        padding: 5px;
+}
+.submitdataPanel{
+		width: 450px;
+		height: 30px;
+		border-radius: 5px 5px 5px 5px;	
+}
+.submissionTutorial{
+       	background-color:#F0F0F0;
+        margin:auto;
+        width:1200px;
+        padding: 10px;
+        text-align:justify;	
+}
+.submissionTutorial p{
+	    background-color:#99FF99;
+		border-radius: 3px 3px 3px 3px;	
+		padding: 10px;
+		font-size:smaller;
+        text-align: left;
+}
+.alertPanel{
+		color:#FF0000;
+		text-align:center;
+		text-decoration:none;
+}
+.ContactPage {
+       	background-color:#F0F0F0;
+        margin:auto;
+        width:1000px;
+        padding: 10px;
+}
+.ContactPage h2{
+		text-align:center;
+}
+.ContactPage table {
+		text-align: center;
+		width: 900px;
+        background-color:#E8E8E8;	
+        padding: 20px;
+		border-radius: 5px 5px 5px 5px;	
+}
+.ContactPage table th{
+		font-size: larger;
+        padding: 10px;
+		border-bottom: 1px solid;
+}

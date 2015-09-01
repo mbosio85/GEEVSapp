@@ -1,0 +1,295 @@
+<div class = "submission">
+<h2>
+	Data Submission Protocol
+</h2>
+<table align="center">
+	
+	<tr>	
+		<td>
+			To submit SNP data to the Geuvadis European Exome Variant Server please follow the instructions below.
+			<ul>
+				<li>To ascertain anonymity of the investigated individuals GEEVS can only accept anonymized, aggregated VCF files.</li>
+				<li>In the data submission form, please specify the sequencing platform used to produce the data. This information is 
+					necessary as variant frequencies are aggregated by platform.</li>
+				<li>We strongly recommend using GATKs multi-sample calling to assure high correlation between results and to pass GEEVS quality filter. 
+					Please find below a short tutorial.</li>
+				<li>Older versions of GATK had limitations on the number of samples used for multi-sample calling. Please upgrade to 
+					current version of GATK, which can be downloaded from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>.</li>
+				<li>If you are using a variant caller other than GATK please convert its output file to aggregate VCF format. For more details on VCF 
+					click <%= link_to :here, "http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41", target: "_blank", class: "nav_links_body"%>. 
+					Please make sure the VCF header format is compatible with our minimum requirements listed below. </li>
+				<li>After submission of your data the GEEVS team will perform quality control and aggregate allele frequencies with the existing data.</li>				 
+			</ul>
+		</td>
+		<td></td><td></td><td></td>	
+		<td>
+			<div class = "submitdata">
+  				<%= form_tag( {:controller => 'gapp', :action => 'handleSubmittedData'},:multipart => true) do %>
+  				<table align="center">
+  				<tr>
+  					<td>
+  			  			<p><b>Data Submission Form</b> (all fields are mandatory)</p>		
+  					</td>
+  				</tr>
+  				<tr>
+  					<td>
+  						<%= select_tag "platform", options_for_select(@platform), :prompt => "select your sequencing platform" , :class => "submitdataPanel"%> &nbsp;
+  					</td>	           
+  				</tr>	
+  				<tr>
+ 					<td>
+ 		    			<%= text_area_tag :datauser,nil,:placeholder => "name(s) of the person responsible for the data. For multiple names separate them by comma(,)", :class => "submitdataPanel" %> 			 
+					</td>
+				</tr>
+				<tr>
+					<td>
+		    			<%= text_field_tag :email,nil,:placeholder => "email(s). For multiple emails separate them by comma(,)", :class => "submitdataPanel" %>
+		    		</td>
+				</tr>
+				<tr>    
+		    		<td>
+  						<%= text_field_tag :institute, nil, :placeholder => "name of the organization" , :class => "submitdataPanel"%>
+  					</td>
+		  		</tr>
+  				<tr>	
+  					<td>
+		    			<%= text_field_tag :instituteUrl, nil, :placeholder => "weblink of the organization" , :class => "submitdataPanel"%>
+		    		</td>
+				</tr>
+				<tr>
+					<td>
+						Logo of the organization: <%= file_field_tag 'logo'%>
+					</td>	
+				</tr
+				<tr>
+					<td>
+						Variant VCF File: <%= file_field_tag 'varinatFile'%>
+					</td>	
+				</tr>
+				<tr>
+					<td>
+						Sample Depth of Coverage File: <%= file_field_tag 'sample_dcov_File'%>
+					</td>	
+				</tr>
+				<tr>
+					<td>					
+						<%= check_box_tag 'checkTermsAndCondition', 'confirm' %> Please check here to confirm that you have <b>read</b> and you <b>agree </b>
+						to the <%=  link_to_modal "Disclaimer & Confidentiality", "#disclaimerModal", :class=>"button" %> policies of GEEVS.
+					</td>	
+				</tr>	
+				<tr>
+					<td>	   
+      					<p><%= submit_tag "Submit data to GEEVS" %></p>
+  					</td>
+  				</tr>
+  				</table>	
+  				<% end %>
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div class = "submissionTutorial">
+<h2>
+	Data Preparation Tutorial
+</h2>
+<h4>
+	<%= link_to "Download", :controller => 'gapp',:action => 'downloadsAction', :dlfile => Rails.root.join('downloads','geevs_user_pipeline.zip') %> the complete tutotial package
+</h4>
+	This tutorial gives a quick overview of GATK UnifiedGenotyper's multi-sample calling procedure from the 
+	<%= link_to "GATK-best practices","http://www.broadinstitute.org/gatk/guide/",target: "_blank", class: "nav_links_body" %> website. 
+	You can download GATK from the <%= link_to :"GATK-website", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body"%>. 
+	To perform this tutorial please also download the GATK bundle resource for performing variant recalibration and the updated bundle resource from 
+	<%= link_to :"here", "http://www.broadinstitute.org/gatk/download", target: "_blank", class: "nav_links_body" %>.
+
+<ul>
+	<li>First collect complete paths of all sample bam files in a single file your_collection_bams.list.</li>
+	
+	<p>		
+	<b>your_collection_bams.list</b><br>
+	path_to_your_sample1/sample1.bam<br>
+	path_to_your_sample2/sample2.bam<br>
+	...<br>
+	...
+	</p>
+
+	<li>Perform GATK multi-sample calling.</li>
+	<p>
+		GATK=path_to/GenomeAnalysisTK.jar<br>
+		REF=path_to/hg19.fasta<br>
+		BAMS=path_to/your_collection_bams.list<br>
+		OUTF=path_to/GEEVS_user_pipeline<br>
+		PROBE=path_to/enrichment_kit_probes_file.bed<br>
+		CPU=number_of_cpu_cores<br>
+
+		java -jar $GATK -R $REF -T UnifiedGenotyper -I $BAMS -nt $CPU -o multisampleInitialCall.vcf -A DepthPerAlleleBySample --intervals $PROBE -glm BOTH<br>
+	</p>
+
+	<li>Separate SNPs and INDELs from the initial call</li>
+	
+	<p>
+		java -jar $GATK -R $REF -T SelectVariants --variant multisampleInitialCall.vcf -o multisampleInitialCall.raw.snps.vcf -selectType SNP -L $PROBE<br>
+		java -jar $GATK -R $REF -T SelectVariants --variant multisampleInitialCall.vcf -o multisampleInitialCall.indels.vcf -selectType INDEL -L $PROBE<br>
+	</p>
+	
+	<li>Perform pre variant recalibration VQRS filtering (SNPs only)</li>
+
+	<p>
+		perl $OUTF/bin/pre_vqrs_filter.pl --infile multisampleInitialCall.raw.snps.vcf --outfile multisampleInitialCall.snps.vcf
+	</p>
+	
+	<li>Perform variant recalibration (SNPs only)</li>
+	
+	<p>
+		java -jar $GATK -T VariantRecalibrator -R $REF -input multisampleInitialCall.snps.vcf -recalFile multisampleInitialCall.snps.vcf.recal -tranchesFile multisampleInitialCall.snps.vcf.tranches   
+		-resource:hapmap,known=false,training=true,truth=true,prior=15.0 hapmap_3.3.hg19.vcf -resource:omni,known=false,training=true,truth=false,prior=12.0 1000G_omni2.5.hg19.vcf 
+		-resource:dbsnp,known=true,training=false,truth=false,prior=2.0 dbsnp_138.hg19.vcf -resource:1000G,known=false,training=true,truth=false,prior=10.0 1000G_phase1.snps.high_confidence.hg19.vcf 
+		-an QD -an MQRankSum -an ReadPosRankSum -an FS  -mode SNP -tranche 100.0 -tranche 99.9 -tranche 99.0 -tranche 90.0 -rscriptFile recalibrate_SNP_plots.R --target_titv 3.0 -L $PROBE<br>
+	</p>
+
+	<li>Apply recalibration (SNPs only)</li>	
+	<p>
+		java -jar $GATK -T ApplyRecalibration -R $REF -input multisampleInitialCall.snps.vcf -tranchesFile multisampleInitialCall.snps.vcf.tranches -recalFile multisampleInitialCall.snps.vcf.recal 
+		-o multisampleInitialCall.snps.recalibrated.filtered.vcf --ts_filter_level 99.9 -mode SNP -L $PROBE<br>	
+	</p>	
+
+	<li>Get passed SNPs from the recalibration vcf and perform variant Evaluation</li>	
+	<p>
+		egrep 'PASS|^#' multisampleInitialCall.snps.recalibrated.filtered.vcf > multisampleInitialCall.snps.recalibrated.filtered.clean.vcf <br>
+		java -jar $GATK -T VariantEval -R $REF --dbsnp dbsnp_138.hg19.vcf -o report.multisampleInitialCall.snps.recalibrated.filtered.clean.vcf 
+		--eval multisampleInitialCall.snps.recalibrated.filtered.clean.vcf -l INFO --downsampling_type NONE<br>
+	</p>	
+
+	<li>Perform variant recalibration (INDELs only)</li>	
+	<p>
+		java -jar $GATK -T VariantRecalibrator -R $REF -input multisampleInitialCall.indels.vcf -recalFile multisampleInitialCall.indels.vcf.recal -tranchesFile multisampleInitialCall.indels.vcf.tranches  
+		--maxGaussians 4 -resource:mills,known=true,training=true,truth=true,prior=12.0 Mills_and_1000G_gold_standard.indels.hg19.vcf -an FS -an ReadPosRankSum -an MQRankSum -tranche 100.0 -tranche 99.9 
+		-tranche 99.0 -tranche 90.0 -mode INDEL -rscriptFile recalibrate_INDEL_plots.R -L $PROBE<br>
+	</p>
+
+	<li>Apply recalibration (INDELs only)</li>	
+	<p>
+		java -jar $GATK -T ApplyRecalibration -R $REF -input multisampleInitialCall.indels.vcf -tranchesFile multisampleInitialCall.indels.vcf.tranches -recalFile multisampleInitialCall.indels.vcf.recal 
+		-o multisampleInitialCall.indels.recalibrated.filtered.vcf --ts_filter_level 99.9 -mode INDEL -L $PROBE<br>	
+	</p>	
+
+	<li>Get passed INDELs from the recalibration vcf and perform variant Evaluation</li>	
+	<p>
+		egrep 'PASS|^#' multisampleInitialCall.indels.recalibrated.filtered.vcf > multisampleInitialCall.indels.recalibrated.filtered.clean.vcf <br>
+		java -jar $GATK -T VariantEval -R $REF --dbsnp dbsnp_138.hg19.vcf -o report.multisampleInitialCall.indels.recalibrated.filtered.clean.vcf 
+		--eval multisampleInitialCall.indels.recalibrated.filtered.clean.vcf -l INFO --downsampling_type NONE<br>
+	</p>	
+
+	<li>Convert your vcf(s) files to geevs format</li>	
+	<p>
+		perl $OUTF/bin/convert_to_geevs_format.pl vcf_files.txt<br>
+		perl $OUTF/bin/prepare_geevs_vcf.pl multisampleInitialCall.snps.recalibrated.filtered.clean.vcf.converted $OUTF/header/vcfheader.txt geevs_variants_to_submit.vcf<br>
+		perl $OUTF/bin/prepare_geevs_vcf.pl multisampleInitialCall.indels.recalibrated.filtered.clean.vcf.converted $OUTF/header/vcfheader.txt geevs_indel_variants_to_submit.vcf<br>
+	</p>	
+
+	<li>Force call variants on each position of geevs region file</li>	
+	<p>
+		java -jar $GATK -R $REF -T UnifiedGenotyper -nt $CPU -I $BAMS -o geevs_locus.vcf -L geevs_locus.gatk.bed --output_mode EMIT_ALL_SITES<br>	
+	</p>	
+
+	<li>Prepare transformed sample depth of coverage file to upload</li>	
+	<p>
+		perl $OUTF/bin/prepare_sample_dcov_file.pl geevs_locus.vcf<br>	
+	</p>	
+
+	<li>Data upload to GEEVS</li>	
+	<p>
+		At this point, you have separate VCFs for SNPs and INDELs along with a transformed sample depth of coverage file. Separate upload for separate VCF file is desired.<br>	
+	</p>	
+
+	
+</ul>
+</div>
+
+
+<div class = "submissionTutorial">
+<h2>
+	Sample VCF file format
+</h2>
+	VCF files should be of version '4.1'. Apart from the default VCF file format structure GEEVS requires to add some additional information in the VCF HEADER. 
+	To learn more about the VCF format please click <%= link_to :"here", "http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41", target: "_blank", class: "nav_links_body" %>.
+	GEEVS VCF Specifications are shown below.
+
+<ul>
+	<li> VCF file HEADER</li>
+
+	<p>
+##fileformat=VCFv4.1<br>
+##fileDate=<><br>
+##SampleSize=<><br>
+##Population=<> (e.g. Spanish)<br>
+##Phenotype=<> (e.g. phenotype X) <br>
+##Enrichment=<> (e.g. SureSelect Human All Exon V1,V3,V4,V4+UUTRs,SeqCap EZ Exome V3 and so on)<br>
+##Sequencer=<> (e.g. HiSeq2000)<br>
+##SeqVersion=<> (e.g. TrueSeq PE Cluster Generation Kit v3, SBS Sequencing Kit v3)<br>
+##ReferenceSeq=hg19<br>
+##Run=<> (e.g. 100bp paired-end)<br>
+##Analysis=<> (e.g. Alignment=BWA v0.7,VariantCalling=GATK v3.1,CallingType=multi-sample calling)<br>
+##Center=<> (e.g. Center for Genomic Regulation - CRG (Barcelona))<br>
+##Contact=<> (e.g. Stephan Ossowski(Stephan.Ossowski@crg.eu))<br>
+		
+<!--						
+##fileformat=VCFv4.1<br>
+##fileDate=20130308<br>
+##SampleSize=100<br>
+##Population=Caucasian<br>
+##Phenotype=43 tinea pedis, 57 strabismus<br>
+##Enrichment=SureSelect Human All Exon V3 (50Mbp)<br>
+##Sequencer=HiSeq2000<br>
+##SeqVersion=TrueSeq PE Cluster Generation Kit v3, SBS Sequencing Kit v3<br>
+###ReferenceSeq=hg19<br>
+##Center=Your institute/university<br>
+##Contact=Contact Person, contact.person@institute.eu<br>
+##Run=100bp paired-end<br>
+##ReferenceSeq=hg19<br>
+<%=  "##Analysis=<Alignment=bwa v0.7.5a,VariantCalling=GenomeAnalysisTK v 2.6-5 + samtools mpileup + shore, CallingType = Multi-sample>" %><br>
+-->
+	</p>
+
+	<li>VCF mandatory INFO tags</li>
+
+<p>
+<%= "##INFO=<ID=AC,Number=A,Type=Integer,Description=\"Allele count in genotypes, in the order of ALT allele listed\">" %><br>
+<%= "##INFO=<ID=AF,Number=A,Type=Float,Description=\"Allele Frequency, for each ALT allele, in the same order as listed\">" %><br>
+<%= "##INFO=<ID=AN,Number=1,Type=Integer,Description=\"Total number of alleles in called genotypes\">" %><br>
+<%= "##INFO=<ID=GTS,Number=3,Type=String,Description=\"Observed Genotypes in the order of AA,AR,RR where R=REF allele and A=ALT allele. For INDELs, A1, A2, or An refers to the N-th alternate allele while R refers to the reference allele\">" %> <br>
+<%= "##INFO=<ID=GTC,Number=3,Type=Integer,Description=\"Genotype Counts in the order of GTS list\">" %><br>
+<%= "##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Approximate average read depth floored to the nearest Integer(reads with MQ=255 or with bad mates are filtered)\">" %><br>
+</p>	
+
+</ul>
+
+</div>
+
+
+
+
+<div id="disclaimerModal" class="demo-description" style="display: none; ">
+
+<h2>Disclaimer</h2>
+
+	<p>
+	The submitters are responsible to ensure that all data they submit to GEEVS fulfill all applicable legal and ethical requirements, and notably that the individuals 
+	from whom the data was extracted have signed a relevant consent form approving of the submission of their data in a pooled database.
+	</p>
+
+<h2>Confidentiality</h2>
+
+	<p>
+	GEEVS will only publish aggregate exome variant frequencies from a pool of data provided by the submitters. Each submission is composed of data from a minimum of 50 samples.
+	No personal data (age, sex, surname, country of origin, presence or absence of specific traits) will be available in GEEVS from any single individuals.
+	Data available for pooled data will be: country where the data was processed, and disease which has been studies. The GEEVS responsibles are aware of the literature 
+	concerning the identification of individuals from pooled genomic data, and of the ethical and legal regulations of privacy in genomics research (see bibliography below).
+	GEEVS responsibles will make all possible efforts to ensure that individuals will be non-identifiable to the greatest possible degree within GEEVS.
+	</p>
+
+	<p>
+		See bibliography <%= link_to :"here", 'about', target: "_blank" %>.
+	</p>
+</div>
