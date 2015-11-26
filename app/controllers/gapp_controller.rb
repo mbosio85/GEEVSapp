@@ -10,7 +10,7 @@ class GappController < ApplicationController
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
     @vartype = ['SNP','INDEL']
-    @subgrp = ['All','spanish']
+    @subgrp = ['All','spanish','uk','nehterlands','germany']
     params[:chPlatform]='Illumina'
   end
 
@@ -22,7 +22,7 @@ class GappController < ApplicationController
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
     @vartype = ['SNP','INDEL']
-    @subgrp = ['All','spanish']
+    @subgrp =  ['All','spanish','uk','nehterlands','germany']
     params[:chPlatform]='Illumina'
   end
   
@@ -33,7 +33,7 @@ class GappController < ApplicationController
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
     @vartype = ['SNP','INDEL']
-    @subgrp = ['All','spanish']
+    @subgrp =  ['All','spanish','uk','nehterlands','germany']
     params[:chPlatform]='Illumina'
      
     
@@ -118,7 +118,7 @@ class GappController < ApplicationController
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
     @vartype = ['SNP','INDEL']
-    @subgrp = ['All','spanish']  
+    @subgrp =  ['All','spanish','uk','nehterlands','germany']
     params[:chPlatform]='Illumina'
   end
   
@@ -128,7 +128,7 @@ class GappController < ApplicationController
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']    
     @vartype = ['SNP','INDEL']
-    @subgrp = ['All','spanish']  
+    @subgrp = ['All','spanish','uk','nehterlands','germany']
     params[:chPlatform]='Illumina'
     ## validate search gene term
     if (params[:gene] == "")
@@ -206,7 +206,7 @@ class GappController < ApplicationController
     @exonicFunction =[ 'All','Exonic','Splicing','Intronic','UTR3','UTR5','Downstream','Upstream','Intergenic','ncRNA_exonic','ncRNA_splicing','ncRNA_intronic','ncRNA_UTR3','ncRNA_UTR5']
     @variantFunction = ['All','Nonsynonymous SNV','Synonymous SNV','Stopgain SNV','Stoploss SNV','Frameshift insertion','Frameshift deletion','Frameshift substitution','Nonframeshift insertion','Nonframeshift deletion','Nonframeshift substitution']
     @vartype = ['SNP','INDEL']
-    @subgrp = ['All','spanish']
+    @subgrp =  ['All','spanish','uk','nehterlands','germany']
     params[:chPlatform]='Illumina'
     ## validate search term
     if (params[:searchTerm] == "")
