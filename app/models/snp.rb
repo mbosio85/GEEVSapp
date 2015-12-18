@@ -181,21 +181,21 @@ class Snp
         #on S.ID = R.snp_id and R.gene_name = H.ensembl_id;  
                 
         qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
-        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+mainvartypegendeftable+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
         on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
         elsif(function == "All" && varfunction != "All")
         qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
-        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+mainvartypegendeftable+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
         on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' 
         AND S."+ platform + " is not null AND R.exonic_function = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";
         elsif(function != "All" && varfunction == "All")
         qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
-        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+mainvartypegendeftable+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
         on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' 
         AND S."+ platform + " is not null AND R.function_snp = '"+ function + "' AND "+afreq+"  "+af+ " limit 5000";
         else
         qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
-        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+mainvartypegendeftable+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
         on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"'
         AND S."+ platform + " is not null AND R.function_snp = '"+ function + "'  AND R.exonic_function = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";    
         end
