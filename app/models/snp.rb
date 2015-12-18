@@ -239,16 +239,16 @@ class Snp
         end         
       else
         if (function == "All" && varfunction == "All")
-        qry = "select S.*,R.*,G.chromosome,G.position,G.AF,G.AC,G.AN,G.DP from "+subgrptable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+        qry = "select S.*,R.*,G.ID,G.AF,G.AC,G.AN,G.DP from "+subgrptable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
         WHERE R.gene_name = '"+ gene +"' AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
         elsif(function == "All" && varfunction != "All")
-        qry = "select S.*,R.*,G.chromosome,G.position,G.AF,G.AC,G.AN,G.DP from "+subgrptable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+        qry = "select S.*,R.*,G.ID,G.AF,G.AC,G.AN,G.DP from "+subgrptable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
         WHERE R.gene_name = '"+ gene +"' AND S."+ platform + " is not null AND R.exonic_function = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";
         elsif(function != "All" && varfunction == "All")
-        qry = "select S.*,R.*,G.chromosome,G.position,G.AF,G.AC,G.AN,G.DP from "+subgrptable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+        qry = "select S.*,R.*,G.ID,G.AF,G.AC,G.AN,G.DP from "+subgrptable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
         WHERE R.gene_name = '"+ gene +"' AND S."+ platform + " is not null AND R.function_snp = '"+ function + "' AND "+afreq+"  "+af+ " limit 5000";
         else
-        qry = "select S.*,R.*,G.chromosome,G.position,G.AF,G.AC,G.AN,G.DP from "+subgrptable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+        qry = "select S.*,R.*,G.ID,G.AF,G.AC,G.AN,G.DP from "+subgrptable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
         WHERE R.gene_name = '"+ gene +"' AND S."+ platform + " is not null AND R.function_snp = '"+ function + "'  AND R.exonic_function = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";    
         end         
       end
