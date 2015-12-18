@@ -180,42 +180,42 @@ class Snp
         #from GEEVS.Table_SNP as S inner join GEEVS.Table_SNP_Annotation_Ensembl as R inner join GEEVS.Table_Gene_symbol_HGNC as H 
         #on S.ID = R.snp_id and R.gene_name = H.ensembl_id;  
                 
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
-        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+mainvartypegendeftable+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID
+        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
         on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
         elsif(function == "All" && varfunction != "All")
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
-        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+mainvartypegendeftable+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID
+        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
         on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' 
         AND S."+ platform + " is not null AND R.exonic_function = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";
         elsif(function != "All" && varfunction == "All")
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
-        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+mainvartypegendeftable+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID
+        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
         on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' 
         AND S."+ platform + " is not null AND R.function_snp = '"+ function + "' AND "+afreq+"  "+af+ " limit 5000";
         else
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
-        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+mainvartypegendeftable+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID
+        from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
         on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"'
         AND S."+ platform + " is not null AND R.function_snp = '"+ function + "'  AND R.exonic_function = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";    
         end
       else
         if (function == "All" && varfunction == "All")
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
         from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H inner join GEEVS."+subgrptable+" as G
         on S.ID = R."+genetablevarid+" and S.ID = G.ID and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
         elsif(function == "All" && varfunction != "All")
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
         from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H inner join GEEVS."+subgrptable+" as G
         on S.ID = R."+genetablevarid+" and S.ID = G.ID and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' 
         AND S."+ platform + " is not null AND R.exonic_function = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";
         elsif(function != "All" && varfunction == "All")
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
         from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H inner join GEEVS."+subgrptable+" as G
         on S.ID = R."+genetablevarid+" and S.ID = G.ID and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' 
         AND S."+ platform + " is not null AND R.function_snp = '"+ function + "' AND "+afreq+"  "+af+ " limit 5000";
         else
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
         from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H inner join GEEVS."+subgrptable+" as G
         on S.ID = R."+genetablevarid+" and S.ID = G.ID and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"'
         AND S."+ platform + " is not null AND R.function_snp = '"+ function + "'  AND R.exonic_function = '"+varfunction+"' AND "+afreq+"  "+af+ " limit 5000";            
