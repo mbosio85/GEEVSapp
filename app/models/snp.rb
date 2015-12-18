@@ -56,13 +56,13 @@ class Snp
         AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND "+afreq+" "+af+ " limit 5000";
       elsif(function == "All" && varfunction != "All")
         qry = "select S.*,R.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R on S.ID = R."+genetablevarid+" WHERE S.chromosome = '"+chromosome+"' 
-        AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
+        AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
       elsif(function != "All" && varfunction == "All")
         qry = "select S.*,R.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R on S.ID = R."+genetablevarid+" WHERE S.chromosome = '"+chromosome+"' 
-        AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND "+afreq+" "+af+ " limit 5000";
+        AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+function+ "' AND "+afreq+" "+af+ " limit 5000";
       else
         qry = "select S.*,R.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R on S.ID = R."+genetablevarid+" WHERE S.chromosome = '"+chromosome+"' 
-        AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND R.function_snp = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
+        AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+function+ "' AND R.exonic_function = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
       end
     else
       if (function == "All" && varfunction == "All")
@@ -70,13 +70,13 @@ class Snp
         WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND "+afreq+" "+af+ " limit 5000";
       elsif(function == "All" && varfunction != "All")
         qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
-        WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
+        WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
       elsif(function != "All" && varfunction == "All")
         qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
-        WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND "+afreq+" "+af+ " limit 5000";
+        WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+function+ "' AND "+afreq+" "+af+ " limit 5000";
       else
         qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
-        WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+function+ "' AND R.function_snp = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
+        WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+function+ "' AND R.exonic_function = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
       end
     end
     
