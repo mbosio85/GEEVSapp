@@ -182,7 +182,7 @@ class Snp
                 
         qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
         from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
-        on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' AND S."+ platform + " is not null AND "+afreq+" "+af+ " limit 5000";
+        on S.ID = R."+genetablevarid+" and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
         elsif(function == "All" && varfunction != "All")
         qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.trnascript_name,R.amino_acid_change,R.exonic_function,R.ID
         from GEEVS."+mainvartypetable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H
