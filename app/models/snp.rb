@@ -201,7 +201,7 @@ class Snp
         end
       else
         if (function == "All" && varfunction == "All")
-        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.*
+        qry = "select S.*,R."+genetablevarid+",H.gene_symbol,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.AF,G.AC.G.AN,G.DP
         from GEEVS."+subgrptable+" as S inner join GEEVS."+ensmaptoall+" as R inner join GEEVS.Table_Gene_symbol_HGNC as H inner join GEEVS."+subgrptable+" as G
         on S.ID = R."+genetablevarid+" and S.ID = G.ID and R.gene_name = H.ensembl_id WHERE H.gene_symbol = '"+ gene +"' AND S."+ platform + " is not null AND "+afreq+" "+af+ "";
         elsif(function == "All" && varfunction != "All")
