@@ -66,17 +66,28 @@ class Snp
       end
     else
       if (function == "All" && varfunction == "All")
-        qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+        #qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+        # WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND "+afreq+" "+af+ " limit 5000";
+        qry = "select S.*,R.indel_id,R.gene_name,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.chromosome,G.position,G.AF,G.AC,G.AN,G.DP from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
         WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND "+afreq+" "+af+ " limit 5000";
+       
       elsif(function == "All" && varfunction != "All")
-        qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+#        qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+#        WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
+        qry = "select S.*,R.indel_id,R.gene_name,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.chromosome,G.position,G.AF,G.AC,G.AN,G.DP from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
         WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.exonic_function = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
       elsif(function != "All" && varfunction == "All")
-        qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+       # qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+       # WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+function+ "' AND "+afreq+" "+af+ " limit 5000";
+       qry = "select S.*,R.indel_id,R.gene_name,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.chromosome,G.position,G.AF,G.AC,G.AN,G.DP from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
         WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+function+ "' AND "+afreq+" "+af+ " limit 5000";
+      
       else
-        qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+       # qry = "select S.*,R.*,G.* from "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
+       # WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+function+ "' AND R.exonic_function = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
+      qry = "select S.*,R.indel_id,R.gene_name,R.transcript_name,R.amino_acid_change,R.exonic_function,R.ID,G.chromosome,G.position,G.AF,G.AC,G.AN,G.DP from  "+mainvartypetable+" as S inner join "+mainvartypegendeftable+" as R inner join "+subgrptable+" as G on S.ID = R."+genetablevarid+" and S.ID = G.ID 
         WHERE S.chromosome = '"+chromosome+"' AND S.position BETWEEN "+start_pos+" AND "+end_pos+ " AND S."+platform+ " is not NULL AND R.function_snp = '"+function+ "' AND R.exonic_function = '"+varfunction+"' AND "+afreq+" "+af+ " limit 5000";
+      
       end
     end
     
